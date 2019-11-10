@@ -33,7 +33,7 @@ data "aws_subnet_ids" "selected_subnet" {
 }
 
 data "aws_security_group" "security_group" {
-  id = "${var.securitygroup}"
+  id = "${var.securitygroup.id}"
 }
 
 ### Launch Instances
