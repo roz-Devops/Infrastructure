@@ -29,7 +29,7 @@ pipeline {
         stage ('Load release json') {
             steps {
                 script {
-                    dir('/Infrastructure/') {
+                    dir('infrastructure') {
                         sh 'ls'
                         sh 'pwd'
                         releaseFile = jsonParse(readFile("release.json"))
@@ -42,7 +42,7 @@ pipeline {
                         println("Those Services will be deployed ${servicesList}")
                         print("The environment is ${envName}")
                     }
-                    dir('Infrastructure') {
+                    dir('infrastructure') {
                         sh "git checkout ${infrastructureVersion}"
                         environmentFile = jsonParse(readFile("environments.json"))
                         aws_region = environmentFile['environments']["${envName}"]['aws_region']
