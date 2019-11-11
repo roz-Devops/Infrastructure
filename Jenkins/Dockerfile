@@ -3,6 +3,7 @@ USER root
 RUN apt -y update
 RUN apt -y install python3-pip
 RUN pip3 install ansible
+RUN update-alternatives --install /usr/bin/python python /usr/bin/python3 10
 RUN wget https://releases.hashicorp.com/terraform/0.12.12/terraform_0.12.12_linux_amd64.zip
 RUN unzip terraform_0.12.12_linux_amd64.zip
 RUN mv terraform /usr/bin

@@ -38,7 +38,9 @@ pipeline {
         stage ('Load release json') {
             steps {
                 script {
-                    dir('release') {
+                    dir('../') {
+                        sh 'ls'
+                        sh 'pwd'
                         releaseFile = jsonParse(readFile("release.json"))
                         releaseName = releaseFile["release"]["name"]
                         releaseVersion = releaseFile["release"]["version"]

@@ -4,19 +4,19 @@
             "aws_region": "eu-west-3",
             "vpc_id": "vpc-id",
             "subnet_prefix": "prod",
-            "security_group": "sg-123"
+            "security_group": "sg-8a1eade8"
         },
         "eu_medium": {
             "aws_region": "eu-west-2",
             "vpc_id": "vpc-id",
             "subnet_prefix": "prod",
-            "security_group": "sg-123"
+            "security_group": "sg-8a1eade8"
         },
         "eu_small": {
             "aws_region": "eu-west-1",
             "vpc_id": "vpc-id",
             "subnet_prefix": "prod",
-            "security_group": "sg-123"
+            "security_group": "sg-8a1eade8"
         }
     }
 }
