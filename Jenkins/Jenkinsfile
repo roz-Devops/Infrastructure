@@ -40,7 +40,7 @@ pipeline {
                         infrastructureVersion = releaseFile["release"]["infrastructure_version"]
                         automationVersion = releaseFile["release"]["automation_version"]
                         envName = releaseFile["release"]["environment"]
-                        servicesList = releaseFile["release"]["services"][0]
+                        servicesList = releaseFile["release"]["services"]['0']
                         println("Those Services will be deployed ${servicesList}")
                         print("The environment is ${envName}")
                     }
