@@ -47,7 +47,7 @@ pipeline {
                     
                    
                     //    sh "git checkout ${infrastructureVersion}"
-                        echo("BuildVersion Is: ${BuildVersion}")
+                        echo ("env starting")
 
                         environmentFile = jsonParse(readFile("environments.json"))
                         aws_region = environmentFile['environments']["${envName}"]['aws_region']
