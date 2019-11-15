@@ -65,7 +65,7 @@ pipeline {
                         serviceVersion = releaseFile["release"]["services"]["${service_int_api}"]["version"]
                         echo (" service version is : ${serviceVersion}")
                            
-                            if( fileExists ('/mnt/artifacts/dev/${service_int_api}_${serviceVersion}.tar')){
+                            if( fileExists ('/var/jenkins_home/${service_int_api}_${serviceVersion}.tar')){
                               println("Artifact is exists :) ${service_int_api}_${serviceVersion}.tar")
 
                    //     sh "ls /mnt/artifacts/dev/${service_int_api}_${serviceVersion}.tar"
@@ -84,7 +84,7 @@ pipeline {
                        
                             int instance_count = releaseFile["release"]["services"]["${service_int_api}"]['instance_count']
                             sh "sed -i 's/REGION/${aws_region}/g' inventory.aws_ec2.yml"
-                            int currentCount = sh script: "ansible-inventory -i inventory.aws_ec2.yml --list | grep Service_${service_int_api} | grep : | wc -l", returnStdout: true
+                            int currentCount = sh script: "ansible-inventory -i inventory.aws_ec2.yml | grep Service_${service_int_api} | grep : | wc -l", returnStdout: true
                             if ( currentCount < instance_count ) {
                                 int instances_to_add = instance_count - currentCount
                                 dir('./terraform') {
