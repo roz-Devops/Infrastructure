@@ -65,9 +65,9 @@ pipeline {
                         serviceVersion = releaseFile["release"]["services"]["${service_int_api}"]["version"]
                         echo (" service version is : ${serviceVersion}")
                         try {
-                            sh "ls /mnt/artifacts/dev/${service}_${serviceVersion}.tar"
+                            sh "ls /mnt/artifacts/dev/${service_int_api}_${serviceVersion}.tar"
                         } catch (error) {
-                            println("Artifact not exists ${service}_${serviceVersion}.tar")
+                            println("Artifact not exists ${service_int_api}_${serviceVersion}.tar")
                             currentBuild.result = 'FAILURE'
                         }
                     
