@@ -92,7 +92,7 @@ pipeline {
                                 instances_to_add = instance_count - currentCount
                                echo (" instances_to_add : ${instances_to_add}")
                                 dir('./terraform') {
-                                  //  sh "terraform init"
+                                    sh "terraform init"
                                     sh "terraform validate"
                                     sh "terraform apply"
                                 }
