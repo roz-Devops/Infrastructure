@@ -27,7 +27,7 @@ data "aws_ami" "ubuntu_ami" {
 
 data "aws_subnet_ids" "selected_subnet" {
   vpc_id = "${data.aws_vpc.selected.id}"
-  tags {
+  tags = {
     Tier = "${var.subnet_scope}"
   }
 }
@@ -39,7 +39,7 @@ data "aws_security_group" "security_group" {
 ### Launch Instances
 resource "aws_instance" "app" {
   subnet_id                   = "${element(data.aws_subnet_ids.selected_subnet.ids, count.index)}"
-  count                       = "${var.count}"
+  count                       = "${var.count_var}"
   key_name                    = "aws"
   ami                         = "${data.aws_ami.ubuntu_ami.id}"
   instance_type               = "${var.instanceType}"
