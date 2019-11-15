@@ -44,8 +44,8 @@ pipeline {
                         servicesList = "intapi"
                         println("Those Services will be deployed ${servicesList}")
                         print("The environment is ${envName}")
-                    }
-                    dir('infrastructure') {
+                    
+                   
                     //    sh "git checkout ${infrastructureVersion}"
                         environmentFile = jsonParse(readFile("environments.json"))
                         aws_region = environmentFile['environments']["${envName}"]['aws_region']
