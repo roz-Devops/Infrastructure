@@ -85,7 +85,8 @@ pipeline {
                        
                             int instance_count = releaseFile["release"]["services"]["${service_int_api}"]['instance_count']
                             sh "sed -i 's/REGION/${aws_region}/g' inventory.aws_ec2.yml"
-                            int currentCount = sh script: "ansible-inventory -i inventory.aws_ec2.yml --list | grep Service_${service_int_api} | grep : | wc -l", returnStdout: true
+                            currentCount = sh script: "ansible-inventory -i inventory.aws_ec2.yml --list | grep Service_${service_int_api} | grep : | wc -l", returnStdout: true
+                             echo (" currentCount : ${currentCount}")
                             if ( currentCount < instance_count ) {
                                 int instances_to_add = instance_count - currentCount
                                 dir('./terraform') {
