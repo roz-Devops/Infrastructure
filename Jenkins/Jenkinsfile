@@ -42,7 +42,7 @@ pipeline {
                         envName = releaseFile["release"]["environment"]
                         //servicesList = releaseFile["release"]["services"].keySet()
                         service_int_api = "intapi"
-                        println("Those Services will be deployed ${servicesList}")
+                        println("Those Services will be deployed ${service_int_api}")
                         print("The environment is ${envName}")
                     
                    
