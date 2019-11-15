@@ -64,7 +64,7 @@ pipeline {
                 script {
                         serviceVersion = releaseFile["release"]["services"]["${service_int_api}"]["version"]
                         echo (" service version is : ${serviceVersion}")
-                           
+                              sh ' ls /var/jenkins_home/${service_int_api}_${serviceVersion}.tar '
                             if( fileExists ('/var/jenkins_home/${service_int_api}_${serviceVersion}.tar')){
                               println("Artifact is exists :) ${service_int_api}_${serviceVersion}.tar")
 
