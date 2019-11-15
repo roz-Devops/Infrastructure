@@ -29,6 +29,8 @@ pipeline {
         stage ('Load release json') {
             steps {
                 script {
+                             sh 'ls'
+                        sh 'pwd'
                     dir('infrastructure') {
                         sh 'ls'
                         sh 'pwd'
