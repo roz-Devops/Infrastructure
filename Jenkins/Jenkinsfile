@@ -76,8 +76,8 @@ pipeline {
             steps {
                 script {
                     dir ('./infrastructure') {
-                        for ( service in servicesList ) {
-                            int instance_count = releaseFile["release"]["services"]["${service}"]['instance_count']
+                       
+                            int instance_count = releaseFile["release"]["services"]["${servicesList}"]['instance_count']
                             sh "sed -i 's/REGION/${aws_region}/g' inventory.aws_ec2.yml"
                             int currentCount = sh script: "ansible-inventory -i inventory.aws_ec2.yml --list | grep Service_${service} | grep : | wc -l", returnStdout: true
                             if ( currentCount < instance_count ) {
@@ -92,7 +92,7 @@ pipeline {
                             else {
                                 println("[INFO] Instnaces amount are aligned")
                             }
-                        }
+                        
                     }
                 }
             }
