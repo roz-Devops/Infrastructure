@@ -1,5 +1,6 @@
 provider "aws" {
-  shared_credentials_file = "${var.cred_file}"
+  #shared_credentials_file = "${var.cred_file}"
+  shared_credentials_file = "/var/jenkins_home/aws_keys/credentials"
   profile                 = "default"
   region                  = "${var.aws_region}"
 }
