@@ -46,7 +46,7 @@ pipeline {
                         print("The environment is ${envName}")
                     }
                     dir('infrastructure') {
-                        sh "git checkout ${infrastructureVersion}"
+                    //    sh "git checkout ${infrastructureVersion}"
                         environmentFile = jsonParse(readFile("environments.json"))
                         aws_region = environmentFile['environments']["${envName}"]['aws_region']
                         aws_vpc = environmentFile['environments']["${envName}"]['vpc_id']
