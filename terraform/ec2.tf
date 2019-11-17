@@ -42,7 +42,7 @@ resource "aws_instance" "app" {
   # vpc_id                      = "${data.aws_vpc.selected.id}"
   subnet_id                   = "${element(var.subnets, count.index)}"
   key_name                    = "aws"
-  ami                         = "${var.ami_id}"
+  ami                         = "${data.aws_ami.ubuntu_ami.id}"
   instance_type               = "t2.micro"
   vpc_security_group_ids      = ["${var.securitygroup}"]
   associate_public_ip_address = true
