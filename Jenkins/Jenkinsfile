@@ -94,7 +94,7 @@ pipeline {
                                 dir('./terraform') {
                                     sh "terraform init"
                                     sh "terraform validate"
-                                    sh "terraform apply"
+                                    sh "terraform apply -auto-approve"
                                 }
                             }
                             else if ( currentCount > instance_count ) {
