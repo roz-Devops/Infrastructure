@@ -94,6 +94,7 @@ pipeline {
                                 dir('./terraform') {
                                     sh "terraform init"
                                     sh "terraform validate"
+                                    sh "terraform plan -auto-approve"
                                     sh "terraform apply -auto-approve"
                                 }
                             }
