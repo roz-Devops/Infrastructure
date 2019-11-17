@@ -2,21 +2,21 @@
     "environments": {
         "eu_big": {
             "aws_region": "us-east-2",
-            "vpc_id": "vpc-id",
+            "vpc_id": "vpc-08a0cd2c524bc419b",
             "subnet_prefix": "prod",
-            "security_group": "sg-8a1eade8"
+            "security_group": "sg-00b66f1ea132e25a4"
         },
         "eu_medium": {
             "aws_region": "eu-west-2",
-            "vpc_id": "vpc-id",
+            "vpc_id": "vpc-08a0cd2c524bc419b",
             "subnet_prefix": "prod",
-            "security_group": "sg-8a1eade8"
+            "security_group": "sg-00b66f1ea132e25a4"
         },
         "eu_small": {
             "aws_region": "eu-west-1",
-            "vpc_id": "vpc-id",
+            "vpc_id": "vpc-08a0cd2c524bc419b",
             "subnet_prefix": "prod",
-            "security_group": "sg-8a1eade8"
+            "security_group": "sg-00b66f1ea132e25a4"
         }
     }
 }
