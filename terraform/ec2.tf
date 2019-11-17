@@ -4,10 +4,11 @@ provider "aws" {
   region                  = "${var.aws_region}"
 }
 
-resource "aws_vpc" "selected" {
-  cidr_block = "${var.cidr_vpc}"
+data "aws_vpc" "selected" {
+  # cidr_block = "${var.cidr_vpc}"
+  id = "${var.aws_vpc_id}"
   tags = {
-    Name = "${var.aws_vpc}"
+    Name = "tera_vpc"
   }
 }
 
@@ -25,11 +26,11 @@ data "aws_ami" "ubuntu_ami" {
   owners = ["823655085559"]
 }
 
-resource "aws_subnet" "selected_subnet" {
-  vpc_id     = "${aws_vpc.selected.id}"
-  cidr_block = "${var.cidr_subnet}"
+# data "aws_subnet" "selected_subnet" {
+#   vpc_id     = "${data.aws_vpc.selected.id}"
+#   cidr_block = "${var.cidr_subnet}"
 
-}
+# }
 
 data "aws_security_group" "security_group" {
   id = "${var.securitygroup}"
@@ -37,7 +38,8 @@ data "aws_security_group" "security_group" {
 
 ### Launch Instances
 resource "aws_instance" "app" {
-  count                       = "${var.count_var}"
+  count = "${var.count_var}"
+  # vpc_id                      = "${data.aws_vpc.selected.id}"
   subnet_id                   = "${element(var.subnets, count.index)}"
   key_name                    = "aws"
   ami                         = "${var.ami_id}"
