@@ -25,12 +25,9 @@ data "aws_ami" "ubuntu_ami" {
   }
   owners = ["823655085559"]
 }
-
-# data "aws_subnet" "selected_subnet" {
-#   vpc_id     = "${data.aws_vpc.selected.id}"
-#   cidr_block = "${var.cidr_subnet}"
-
-# }
+data "aws_subnet_ids" "selected_subnet" {
+  vpc_id = "${data.aws_vpc.selected.id}"
+}
 
 data "aws_security_group" "security_group" {
   id = "${var.securitygroup}"
@@ -38,17 +35,14 @@ data "aws_security_group" "security_group" {
 
 ### Launch Instances
 resource "aws_instance" "app" {
-  count = "${var.count_var}"
-  # vpc_id                      = "${data.aws_vpc.selected.id}"
-  subnet_id                   = "${element(var.subnets, count.index)}"
+  count                       = "${var.count_var}"
+  subnet_id                   = "${element(tolist(data.aws_subnet_ids.selected_subnet.ids), count.index)}"
   key_name                    = "aws"
   ami                         = "${data.aws_ami.ubuntu_ami.id}"
   instance_type               = "t2.micro"
-  vpc_security_group_ids      = ["${var.securitygroup}"]
-  associate_public_ip_address = true
+  security_groups             = ["${data.aws_security_group.security_group.id}"]
+  associate_public_ip_address = "${var.publicip}"
 
-  # associate_public_ip_address = "${var.publicip}"
-  # security_groups = ["${data.aws_security_group.security_group.id_sec}"]
 
   root_block_device {
     volume_size = 8
