@@ -82,11 +82,11 @@ pipeline {
             steps {
                 script {
                     dir ('infrastructure') {
-                        int currentCount = sh script: "aws ec2 describe-instances --query 'Reservations[*].Instances[*].[InstanceId]' --region ${aws_region} --filters Name=instance-state-name,Values=running --output text | wc -l" , returnStdout: true
+                       // int currentCount = sh script: "aws ec2 describe-instances --query 'Reservations[*].Instances[*].[InstanceId]' --region ${aws_region} --filters Name=instance-state-name,Values=running --output text | wc -l" , returnStdout: true
                    
                             int instance_count = releaseFile["release"]["services"]["${service_int_api}"]['instance_count']
                             sh "sed -i 's/REGION/${aws_region}/g' inventory.aws_ec2.yml"
-                        //    currentCount = sh script: "ansible-inventory -i inventory.aws_ec2.yml --list | grep Service_${service_int_api} | --output text | wc -l", returnStdout: true
+                            int currentCount = sh script: "ansible-inventory -i inventory.aws_ec2.yml --list | grep Service_${service_int_api} | --output text | wc -l", returnStdout: true
                              echo (" currentCount : ${currentCount}")
                               echo (" instance_count : ${instance_count}")
                             if ( currentCount < instance_count ) {
