@@ -85,6 +85,7 @@ pipeline {
                        
                             instance_count = releaseFile["release"]["services"]["${service_int_api}"]['instance_count']
                             sh "sed -i 's/REGION/${aws_region}/g' inventory.aws_ec2.yml"
+                            sh "ansible-inventory -i inventory.aws_ec2.yml --list | grep Service_${service_int_api}"
                             currentCount = sh script: "ansible-inventory -i inventory.aws_ec2.yml --list | grep Service_${service_int_api} | grep : | wc -l", returnStdout: true
                              echo (" currentCount : ${currentCount}")
                               echo (" instance_count : ${instance_count}")
