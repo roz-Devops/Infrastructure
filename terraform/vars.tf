@@ -1,5 +1,5 @@
 variable "aws_region" { default = "us-east-2" }
-variable "count_var" { default = 0 }
+variable "count_var" { default = "1" }
 variable "cred_file" { default = "~/.aws/credentials" }
 variable "instanceType" { default = "t2.micro" }
 
