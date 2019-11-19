@@ -103,7 +103,8 @@ pipeline {
                             }
                             else if ( currentCount > instance_count ) {
                                 // remove instances
-                               echo "enough instances"
+                               echo "Lets reduce instances"
+                               terraform destroy —target aws_instance.intapi["${instance_count}"]
                             }
                             else {
                                 println("[INFO] Instnaces amount are aligned")
