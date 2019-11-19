@@ -95,7 +95,7 @@ pipeline {
                                     sh "terraform init"
                                     sh "terraform validate"
                                     // sh "terraform plan"
-                                    sh "terraform apply -var 'aws_region = ${aws_region}' -var 'aws_vpc_id = ${aws_vpc}' -var 'envName = ${envName}' -var 'securitygroup = ${security_group}' -var 'serviceName = ${service_int_api}' -auto-approve"
+                                    sh "terraform apply -var 'aws_region = ${aws_region}' -auto-approve"
                                 }
                             }
                             else if ( currentCount > instance_count ) {
