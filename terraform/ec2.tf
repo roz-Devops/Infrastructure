@@ -55,3 +55,4 @@ resource "aws_instance" "app" {
     InstanceType   = "${var.instanceType}"
   }
 }
+ 
