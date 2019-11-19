@@ -12,7 +12,7 @@ variable "subnets" {
   type    = "list"
 }
 variable "cidr_subnet" { default = "10.0.0.0/24" }
-variable "envName" { default = "env" }
+
 variable "publicip" { default = true }
 variable "releaseVersion" { default = "1.0.0" }
 variable "securitygroup" { default = "sg-00b66f1ea132e25a4" }
@@ -27,4 +27,6 @@ variable "serviceVersion" {
 variable "subnet_scope" {
   default = ""
 }
-
+variable "envName" {
+  type = string
+}
