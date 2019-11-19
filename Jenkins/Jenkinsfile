@@ -82,7 +82,7 @@ pipeline {
             steps {
                 script {
                     dir ('infrastructure') {
-                      sh "aws ec2 describe-instances --query 'Reservations[*].Instances[*].[InstanceId]' --region ${aws_region} --output text | wc -l
+                      sh "aws ec2 describe-instances --query 'Reservations[*].Instances[*].[InstanceId]' --region ${aws_region} --output text | wc -l"
 "
                             instance_count = releaseFile["release"]["services"]["${service_int_api}"]['instance_count']
                             sh "sed -i 's/REGION/${aws_region}/g' inventory.aws_ec2.yml"
