@@ -95,7 +95,7 @@ pipeline {
                                     sh "terraform init"
                                     sh "terraform validate"
                                     // sh "terraform plan"
-                                    sh "terraform apply -auto-approve var 'envName = us-east-2'"
+                                    sh "terraform apply -auto-approve -var 'envName = us-east-2'"
                                 }
                             }
                             else if ( currentCount > instance_count ) {
