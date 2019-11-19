@@ -95,7 +95,9 @@ pipeline {
                                     sh "terraform init"
                                     sh "terraform validate"
                                     // sh "terraform plan"
-                                   sh "terraform apply -auto-approve -var 'envName = ${envName}'"
+                                 //  sh "terraform apply -auto-approve -var 'envName = ${envName}'"
+                                  sh' terraform apply -auto-approve -var="envName=ami-abc123"'
+
                                 }
                             }
                             else if ( currentCount > instance_count ) {
