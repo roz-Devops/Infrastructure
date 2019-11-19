@@ -1,6 +1,6 @@
 variable "aws_region" { default = "us-east-2" }
 variable "ami_id" { default = "ami-02c9cd67ee3986af1" }
-variable "count_var" { default = 3 }
+variable "count_var" { default = 1 }
 variable "cred_file" { default = "~/.aws/credentials" }
 
 # variable "cred_file" { default = "/var/jenkins_home/aws_keys/credentials" }
