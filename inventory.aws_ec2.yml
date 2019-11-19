@@ -3,7 +3,7 @@ regions:
 - REGION
 keyed_groups:
 - key: tags.Name
-#  prefix: Service_
+ prefix: Service_
   separator: ""
 compose:
   ansible_host: public_ip_address
