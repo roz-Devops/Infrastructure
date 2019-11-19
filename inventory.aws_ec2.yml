@@ -2,7 +2,7 @@ plugin: aws_ec2
 regions:
 - REGION
 keyed_groups:
-- key: tags.Name
+- key: tags.Service
   prefix: Service_
   separator: ""
 compose:
