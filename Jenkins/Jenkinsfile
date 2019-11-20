@@ -97,12 +97,12 @@ pipeline {
                             int instances_to_add = instance_count - currentCount
                        def data = [
                {data.'envName'="${envName}"} ,
-               {'aws_vpc_id'="${aws_vpc}"}  ,
-                {'securitygroup'="${security_group}"} ,
-                {'aws_region'="${aws_region}"},
-                {'count_var'="${instances_to_add}"},
-               {'serviceName'="${service_int_api}"},
-               {'serviceVersion'="${serviceVersion}"}
+               {data.'aws_vpc_id'="${aws_vpc}"}  ,
+                {data.'securitygroup'="${security_group}"} ,
+                {data.'aws_region'="${aws_region}"},
+                {data.'count_var'="${instances_to_add}"},
+               {data.'serviceName'="${service_int_api}"},
+               {data.'serviceVersion'="${serviceVersion}"}
                        ]
  
 
