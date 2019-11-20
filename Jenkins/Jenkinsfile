@@ -22,7 +22,7 @@ pipeline {
                     deleteDir()
                     dir ('infrastructure') {
                         checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'git_rd_cred', url: 'https://github.com/roz-Devops/Infrastructure.git']]])
-                    }
+                    } 
                 }
             }
         }
