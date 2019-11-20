@@ -81,7 +81,7 @@ pipeline {
         stage ('Vaildate Instances amount') {
             steps {
                 script {
-                    dir ('infrastructure') {
+                    dir ('./terraform') {
                         int currentCount = sh script: "aws ec2 describe-instances --query 'Reservations[*].Instances[*].[InstanceId]' --region ${aws_region} --filters Name=instance-state-name,Values=running --output text | wc -l" , returnStdout: true
                  //   int currentCount = 0
                         sh "terraform init"
@@ -95,13 +95,13 @@ pipeline {
                             if ( currentCount < instance_count ) {
                                 instances_to_add = instance_count - currentCount
                                echo (" instances_to_add : ${instances_to_add}")
-                                dir('./terraform') {
+                                
                                     sh "terraform validate"
                                     // sh "terraform plan"
                                  //  sh "terraform apply -auto-approve -var 'envName = ${envName}'"
                                     sh "terraform apply -auto-approve -var='envName=${envName}' -var='aws_vpc_id=${aws_vpc}' -var='securitygroup=${security_group}' -var='aws_region=${aws_region}' -var='count_var=${instances_to_add}' -var='serviceName=${service_int_api}' -var='serviceVersion=${serviceVersion}'"
 
-                                }
+                                
                             }
                             else if ( currentCount > instance_count ) {
                                 // remove instances
