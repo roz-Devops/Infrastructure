@@ -96,12 +96,12 @@ pipeline {
                               echo (" instance_count : ${instance_count}")
                             int instances_to_add = instance_count - currentCount
                        def data = {
-               'envName'="${envName}" ,
-               'aws_vpc_id'="${aws_vpc}" ,
-                'securitygroup'="${security_group}" ,
-                'aws_region'="${aws_region}",
-                'count_var'="${instances_to_add}",
-               'serviceName'="${service_int_api}",
+               'envName'="${envName}" 
+               'aws_vpc_id'="${aws_vpc}" 
+                'securitygroup'="${security_group}" 
+                'aws_region'="${aws_region}"
+                'count_var'="${instances_to_add}"
+               'serviceName'="${service_int_api}"
                'serviceVersion'="${serviceVersion}"
                        }
  
