@@ -107,7 +107,7 @@ pipeline {
                             if ( currentCount > instance_count ) {
                                 // remove instances
                                echo "Lets reduce instances"
-                               sh "terraform destroy -auto-approve -target='aws_instance.intapi[2]'"
+                               sh "terraform destroy -auto-approve -target='aws_instance.intapi[2]' -var='envName=${envName}' -var='aws_vpc_id=${aws_vpc}' -var='securitygroup=${security_group}' -var='aws_region=${aws_region}' -var='count_var=${instances_to_add}' -var='serviceName=${service_int_api}' -var='serviceVersion=${serviceVersion}'"
                             }
                        
                             else {
