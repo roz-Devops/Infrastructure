@@ -95,21 +95,21 @@ pipeline {
                              echo (" currentCount : ${currentCount}")
                               echo (" instance_count : ${instance_count}")
                             int instances_to_add = instance_count - currentCount
-                       def data =[ 'envName' {"${envName}"}, \
-                          'aws_vpc_id' {"${aws_vpc}"}, \
-                          'securitygroup' {"${security_group}"}, \
-                          'aws_region' {"${aws_region}"}, \
-                          'count_var' {"${instances_to_add}"}, \
-                          'serviceName' {"${service_int_api}"}, \
-                                  'serviceVersion' {"${serviceVersion}"} ]
+                //       def data =[ 'envName' {"${envName}"}, \
+                  //        'aws_vpc_id' {"${aws_vpc}"}, \
+                    //      'securitygroup' {"${security_group}"}, \
+                      //    'aws_region' {"${aws_region}"}, \
+                     //     'count_var' {"${instances_to_add}"}, \
+                      //    'serviceName' {"${service_int_api}"}, \
+                        //          'serviceVersion' {"${serviceVersion}"} ]
 
     //but if writeJSON not supported by your version:
     //convert maps/arrays to json formatted string
-    def json = JsonOutput.toJson(data)
+    //def json = JsonOutput.toJson(data)
     //if you need pretty print (multiline) json
   //  json = JsonOutput.prettyPrint(json)
                        //put string into the file:
-    writeFile(file:'terraform.tfvars', text: json)
+    //writeFile(file:'terraform.tfvars', text: json)
                        
                               sh "terraform init"
    
@@ -120,7 +120,7 @@ pipeline {
                                //     sh "terraform validate"
                                     // sh "terraform plan"
                                  //  sh "terraform apply -auto-approve -var 'envName = ${envName}'"
-                               sh "terraform apply -auto-approve -var-file='terraform.tfvars' -input='false'"
+                               sh "terraform apply -auto-approve -input='false'"
 
                                    // sh "terraform apply -auto-approve"
 
