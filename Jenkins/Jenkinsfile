@@ -95,7 +95,7 @@ pipeline {
                              echo (" currentCount : ${currentCount}")
                               echo (" instance_count : ${instance_count}")
                             int instances_to_add = instance_count - currentCount
-                       def data = [
+                       def data = {
                {data.'envName'="${envName}"} ,
                {data.'aws_vpc_id'="${aws_vpc}"}  ,
                 {data.'securitygroup'="${security_group}"} ,
@@ -103,7 +103,7 @@ pipeline {
                 {data.'count_var'="${instances_to_add}"},
                {data.'serviceName'="${service_int_api}"},
                {data.'serviceVersion'="${serviceVersion}"}
-                       ]
+                       }
  
 
     //but if writeJSON not supported by your version:
