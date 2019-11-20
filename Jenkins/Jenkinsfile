@@ -112,7 +112,7 @@ pipeline {
     //if you need pretty print (multiline) json
     json = JsonOutput.prettyPrint(json)
                        //put string into the file:
-    writeFile(file:'*.auto.tfvars', text: json)
+    writeFile(file:'passed_vars.tfvars', text: json)
                        
                               sh "terraform init"
    
@@ -123,7 +123,7 @@ pipeline {
                                //     sh "terraform validate"
                                     // sh "terraform plan"
                                  //  sh "terraform apply -auto-approve -var 'envName = ${envName}'"
-                               sh "terraform apply -auto-approve var-file=*.auto.tfvars"
+                               sh "terraform apply -auto-approve var-file='passed_vars.tfvars'"
 
                                    // sh "terraform apply -auto-approve"
 
