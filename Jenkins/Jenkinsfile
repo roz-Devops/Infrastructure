@@ -94,7 +94,7 @@ pipeline {
                           //  int currentCount = sh script: "ansible-inventory -i inventory.aws_ec2.yml --list | grep Service_${service_int_api} | --output text | wc -l", returnStdout: true
                              echo (" currentCount : ${currentCount}")
                               echo (" instance_count : ${instance_count}")
-                       
+                            int instances_to_add = instance_count - currentCount
             def data = [
                "envName":"${envName}" ,
                "aws_vpc_id":"${aws_vpc}"  ,
@@ -117,7 +117,7 @@ pipeline {
                               sh "terraform init"
    
                        if ( currentCount < instance_count ) {
-                               int instances_to_add = instance_count - currentCount
+                          
                                echo (" instances_to_add : ${instances_to_add}")
                                 
                                //     sh "terraform validate"
