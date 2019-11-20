@@ -107,9 +107,9 @@ pipeline {
     //convert maps/arrays to json formatted string
    //  def json = JsonOutput.toJson(data)
     //if you need pretty print (multiline) json
-  //  json = JsonOutput.prettyPrint(json)
+    json = JsonOutput.prettyPrint(json)
                        //put string into the file:
-    writeFile(file:'terraform.tfvars', text: data)
+    writeFile(file:'terraform.tfvars', text: json)
                        
                               sh "terraform init"
    
