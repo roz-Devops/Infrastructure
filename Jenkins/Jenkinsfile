@@ -104,7 +104,7 @@ pipeline {
                             else if ( currentCount > instance_count ) {
                                 // remove instances
                                echo "Lets reduce instances"
-                               sh "terraform destroy —target=aws_instance.app[3]"
+                               sh "terraform destroy -target=aws_instance.app[2]"
                             }
                        
                             else {
