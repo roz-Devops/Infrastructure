@@ -1,5 +1,7 @@
 import groovy.json.JsonSlurper
 import groovy.json.JsonSlurperClassic
+import groovy.json.*
+
 @NonCPS
 def createBooleanParameter(String value, String desc) {
    return [$class: 'BooleanParameterDefinition', defaultValue: false, name: value, description: desc]
@@ -92,8 +94,29 @@ pipeline {
                           //  int currentCount = sh script: "ansible-inventory -i inventory.aws_ec2.yml --list | grep Service_${service_int_api} | --output text | wc -l", returnStdout: true
                              echo (" currentCount : ${currentCount}")
                               echo (" instance_count : ${instance_count}")
+                       
+            def data = [
+                  -var='envName=${envName}' 
+               
+               aws_vpc_id='${aws_vpc}'  ,
+               securitygroup='${security_group}',
+               aws_region='${aws_region}',
+               count_var='${instances_to_add}',
+               serviceName='${service_int_api}',
+               serviceVersion='${serviceVersion}'
+           ]
+ 
+
+    //but if writeJSON not supported by your version:
+    //convert maps/arrays to json formatted string
+     def json = JsonOutput.toJson(data)
+    //if you need pretty print (multiline) json
+    json = JsonOutput.prettyPrint(json)
+                       //put string into the file:
+    writeFile(file:'*.auto.tfvars', text: json)
+                       
                               sh "terraform init"
-    
+   
                        if ( currentCount < instance_count ) {
                                int instances_to_add = instance_count - currentCount
                                echo (" instances_to_add : ${instances_to_add}")
