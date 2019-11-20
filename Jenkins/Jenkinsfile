@@ -101,7 +101,7 @@ pipeline {
                           'aws_region' {"${aws_region}"}, \
                           'count_var' {"${instances_to_add}"}, \
                           'serviceName' {"${service_int_api}"}, \
-                                  'serviceVersion' {"${serviceVersion}"} \]
+                                  'serviceVersion' {"${serviceVersion}"} ]
 
     //but if writeJSON not supported by your version:
     //convert maps/arrays to json formatted string
