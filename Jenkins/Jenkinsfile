@@ -84,6 +84,9 @@ pipeline {
                     dir ('infrastructure') {
                         int currentCount = sh script: "aws ec2 describe-instances --query 'Reservations[*].Instances[*].[InstanceId]' --region ${aws_region} --filters Name=instance-state-name,Values=running --output text | wc -l" , returnStdout: true
                  //   int currentCount = 0
+                       terraform state list
+                                                           sh "terraform init"
+
                             int instance_count = releaseFile["release"]["services"]["${service_int_api}"]['instance_count']
                             sh "sed -i 's/REGION/${aws_region}/g' inventory.aws_ec2.yml"
                           //  int currentCount = sh script: "ansible-inventory -i inventory.aws_ec2.yml --list | grep Service_${service_int_api} | --output text | wc -l", returnStdout: true
@@ -93,7 +96,6 @@ pipeline {
                                 instances_to_add = instance_count - currentCount
                                echo (" instances_to_add : ${instances_to_add}")
                                 dir('./terraform') {
-                                    sh "terraform init"
                                     sh "terraform validate"
                                     // sh "terraform plan"
                                  //  sh "terraform apply -auto-approve -var 'envName = ${envName}'"
@@ -104,7 +106,6 @@ pipeline {
                             else if ( currentCount > instance_count ) {
                                 // remove instances
                                echo "Lets reduce instances"
-                               sh "terraform init"
                                sh "terraform destroy -auto-approve -target='aws_instance.intapi[2]'"
                             }
                        
