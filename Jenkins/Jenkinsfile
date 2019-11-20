@@ -104,7 +104,7 @@ pipeline {
                             else if ( currentCount > instance_count ) {
                                 // remove instances
                                echo "Lets reduce instances"
-                               sh "terraform destroy -auto-approve -target=aws_instance.app[2]"
+                               sh "terraform destroy -auto-approve -target='aws_instance.intapi[2]'"
                             }
                        
                             else {
