@@ -8,7 +8,7 @@ variable "envName" { type = "string" }
 variable "publicip" { default = true }
 variable "releaseVersion" { default = "1.0.0" }
 variable "securitygroup" { type = "string" }
-variable "subnetName" { type = "string" }
+variable "subnetName" { default = "sub"}
 variable "serviceName" {
  type = "string"
 }
