@@ -85,7 +85,7 @@ pipeline {
                         int currentCount = sh script: "aws ec2 describe-instances --query 'Reservations[*].Instances[*].[InstanceId]' --region ${aws_region} --filters Name=instance-state-name,Values=running --output text | wc -l" , returnStdout: true
                  //   int currentCount = 0
                         sh "terraform init"
-                        sh "terraform state list"
+                       // sh "terraform state list"
                         sh "terraform plan"
                             int instance_count = releaseFile["release"]["services"]["${service_int_api}"]['instance_count']
                             sh "sed -i 's/REGION/${aws_region}/g' inventory.aws_ec2.yml"
