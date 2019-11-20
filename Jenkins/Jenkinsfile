@@ -82,8 +82,8 @@ pipeline {
             steps {
                 script {
                     dir ('infrastructure/terraform') {
-                    //    int currentCount = sh script: "aws ec2 describe-instances --query 'Reservations[*].Instances[*].[InstanceId]' --region ${aws_region} --filters Name=instance-state-name,Values=running --output text | wc -l" , returnStdout: true
-                    int currentCount = 0
+                        int currentCount = sh script: "aws ec2 describe-instances --query 'Reservations[*].Instances[*].[InstanceId]' --region ${aws_region} --filters Name=instance-state-name,Values=running --output text | wc -l" , returnStdout: true
+                   // int currentCount = 0
                         sh "terraform init"
                          sh "terraform refresh -target='aws_instance.app'"
                        // sh "terraform state list"
