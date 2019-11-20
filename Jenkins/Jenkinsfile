@@ -84,7 +84,6 @@ pipeline {
                     dir ('infrastructure/terraform') {
                         int currentCount = sh script: "aws ec2 describe-instances --query 'Reservations[*].Instances[*].[InstanceId]' --region ${aws_region} --filters Name=instance-state-name,Values=running --output text | wc -l" , returnStdout: true
                    // int currentCount = 0
-                        sh "terraform init"
                          //sh "terraform refresh -target='aws_instance.app'"
                        // sh "terraform state list"
                        // sh "terraform plan"
@@ -93,14 +92,18 @@ pipeline {
                           //  int currentCount = sh script: "ansible-inventory -i inventory.aws_ec2.yml --list | grep Service_${service_int_api} | --output text | wc -l", returnStdout: true
                              echo (" currentCount : ${currentCount}")
                               echo (" instance_count : ${instance_count}")
-                            if ( currentCount < instance_count ) {
+                              sh "terraform init"
+    
+                       if ( currentCount < instance_count ) {
                                int instances_to_add = instance_count - currentCount
                                echo (" instances_to_add : ${instances_to_add}")
                                 
-                                    sh "terraform validate"
+                               //     sh "terraform validate"
                                     // sh "terraform plan"
                                  //  sh "terraform apply -auto-approve -var 'envName = ${envName}'"
-                                    sh "terraform apply -auto-approve"
+                               sh "terraform apply -auto-approve -var='envName=${envName}' -var='aws_vpc_id=${aws_vpc}' -var='securitygroup=${security_group}' -var='aws_region=${aws_region}' -var='count_var=${instances_to_add}' -var='serviceName=${service_int_api}' -var='serviceVersion=${serviceVersion}'"
+
+                                   // sh "terraform apply -auto-approve"
 
                                 
                             }
