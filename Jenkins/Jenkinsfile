@@ -94,7 +94,7 @@ pipeline {
                              echo (" currentCount : ${currentCount}")
                               echo (" instance_count : ${instance_count}")
                             if ( currentCount < instance_count ) {
-                                instances_to_add = instance_count - currentCount
+                               int instances_to_add = instance_count - currentCount
                                echo (" instances_to_add : ${instances_to_add}")
                                 
                                     sh "terraform validate"
