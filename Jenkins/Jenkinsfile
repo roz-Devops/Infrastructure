@@ -112,7 +112,7 @@ pipeline {
     //writeFile(file:'terraform.tfvars', text: json)
                        
                               sh "terraform init"
-                              sh "export TF_VAR_aws_region='${aws_region}'"
+                               sh "export TF_VAR_aws_region='${aws_region}'"
                                sh "export TF_VAR_aws_vpc_id='${aws_vpc}'"
                                sh "export TF_VAR_serviceName='${service_int_api}'"
                                sh "export TF_VAR_serviceVersion='${serviceVersion}'"
@@ -128,8 +128,7 @@ pipeline {
                                  //  sh "terraform apply -auto-approve -var 'envName = ${envName}'"
                                //sh "terraform apply -auto-approve"
                          //      sh "terraform apply -auto-approve"
-
-                            sh "terraform apply -auto-approve"
+                            sh "TF_CLI_ARGS="-input=false" terraform apply -auto-approve"
 
                                 
                             }
