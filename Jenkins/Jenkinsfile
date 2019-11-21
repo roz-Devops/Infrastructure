@@ -112,12 +112,12 @@ pipeline {
     //writeFile(file:'terraform.tfvars', text: json)
                        
                               sh "terraform init"
-                              sh "set TF_VAR_aws_region=${aws_region}"
-                               sh "set TF_VAR_aws_vpc_id=${aws_vpc}"
-                               sh "set TF_VAR_serviceName=${service_int_api}"
-                               sh "set TF_VAR_serviceVersion=${serviceVersion}"
-                               sh "set TF_VAR_securitygroup=${security_group}"
-                               sh "set TF_VAR_count_var=${instances_to_add}"
+                              sh "set TF_VAR_aws_region='${aws_region}'"
+                               sh "set TF_VAR_aws_vpc_id='${aws_vpc}'"
+                               sh "set TF_VAR_serviceName='${service_int_api}'"
+                               sh "set TF_VAR_serviceVersion='${serviceVersion}'"
+                               sh "set TF_VAR_securitygroup='${security_group}'"
+                               sh "set TF_VAR_count_var='${instances_to_add}'"
    
                        if ( currentCount < instance_count ) {
                           
