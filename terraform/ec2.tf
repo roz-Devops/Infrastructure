@@ -36,7 +36,7 @@ data "aws_security_group" "security_group" {
 ### Launch Instances
 resource "aws_instance" "app" {
   count                       = "${var.count_var}"
-  subnet_id                   = "${element(tolist(data.aws_subnet_ids.selected_subnet.ids), count.index)}"
+  subnet_id                   = "${element(data.aws_subnet_ids.selected_subnet.ids, count.index)}"
   key_name                    = "aws"
   ami                         = "${data.aws_ami.ubuntu_ami.id}"
   instance_type               = "t2.micro"
