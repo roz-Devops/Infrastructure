@@ -111,13 +111,15 @@ pipeline {
                        //put string into the file:
     //writeFile(file:'terraform.tfvars', text: json)
                        
-                              sh "terraform init"
+                               sh "terraform init"
                                sh "export TF_VAR_aws_region='${aws_region}'"
                                sh "export TF_VAR_aws_vpc_id='${aws_vpc}'"
                                sh "export TF_VAR_serviceName='${service_int_api}'"
                                sh "export TF_VAR_serviceVersion='${serviceVersion}'"
                                sh "export TF_VAR_securitygroup='${security_group}'"
                                sh "export TF_VAR_count_var='${instances_to_add}'"
+                               sh "export TF_INPUT=0"
+                       echo "${TF_VAR_securitygroup}"
    
                        if ( currentCount < instance_count ) {
                           
