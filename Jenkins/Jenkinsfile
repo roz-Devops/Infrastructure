@@ -119,7 +119,6 @@ pipeline {
                                sh "export TF_VAR_securitygroup='${security_group}'"
                                sh "export TF_VAR_count_var='${instances_to_add}'"
                                sh "export TF_INPUT=0"
-                               echo $TF_VAR_securitygroup
    
                        if ( currentCount < instance_count ) {
                           
