@@ -130,7 +130,7 @@ pipeline {
                                //sh "terraform apply -auto-approve"
                          //      sh "terraform apply -auto-approve"
                           //  sh "terraform validate -var-file=terraform.tfvars"
-                            sh "TF_CLI_ARGS='-input=false' terraform apply -auto-approve -env='TF_VAR_count_var=${instances_to_add}' -env='TF_VAR_aws_vpc_id='${aws_vpc}' "
+                            sh "TF_CLI_ARGS='-input=false' terraform apply -auto-approve -env='TF_VAR_count_var=${instances_to_add}' -env='TF_VAR_aws_vpc_id=${aws_vpc}' "
 
                                 
                             }
