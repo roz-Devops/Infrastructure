@@ -113,7 +113,7 @@ pipeline {
                        
                               sh "terraform init"
                               sh "export TF_VAR_aws_region=${aws_region}"
-                               echo "meow :" %TF_VAR_aws_region%
+                               echo  %TF_VAR_aws_region%
                                sh "export TF_VAR_aws_vpc_id=${aws_vpc}"
                                sh "export TF_VAR_serviceName=${service_int_api}"
                                sh "export TF_VAR_serviceVersion=${serviceVersion}"
