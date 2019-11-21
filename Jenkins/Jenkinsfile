@@ -112,7 +112,7 @@ pipeline {
     //writeFile(file:'terraform.tfvars', text: json)
                        
                               sh "terraform init"
-                              sh "set TF_VAR_aws_region='${aws_region}'"
+                              sh "export TF_VAR_aws_region='${aws_region}'"
                                sh "set TF_VAR_aws_vpc_id='${aws_vpc}'"
                                sh "set TF_VAR_serviceName='${service_int_api}'"
                                sh "set TF_VAR_serviceVersion='${serviceVersion}'"
