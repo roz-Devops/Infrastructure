@@ -6,7 +6,7 @@ provider "aws" {
 
 data "aws_vpc" "selected" {
   # cidr_block = "${var.cidr_vpc}"
-  id = "${var.aws_vpc_id}"
+  id = "${env.TF_VAR_aws_vpc_id} "
   tags = {
     Name = "tera_vpc"
   }
