@@ -153,6 +153,8 @@ pipeline {
             steps {
                 script {
                     dir('infrastructure/ansible') {
+                                               print("ansible")
+
                         for ( service in service_int_api ) {
                             sh "echo [${service}] > hosts"
                             configVersion = releaseFile["release"]["services"]["${service}"]["configuration"]
