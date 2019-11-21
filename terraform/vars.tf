@@ -8,6 +8,9 @@ variable "envName" { default = "string1" }
 variable "publicip" { default = true }
 variable "releaseVersion" { default = "1.0.0" }
 variable "securitygroup" { default = "string1" }
+output "ov" {
+  value = "{var.securitygroup}"
+}
 variable "subnetName" { default = "sub"}
 variable "serviceName" {
  default = "string"
