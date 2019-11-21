@@ -121,8 +121,9 @@ pipeline {
                                     // sh "terraform plan"
                                  //  sh "terraform apply -auto-approve -var 'envName = ${envName}'"
                                sh "terraform apply -auto-approve"
+                               sh "terraform apply -auto-approve -var='envName=${envName}' -var='aws_vpc_id=${aws_vpc}' -var='securitygroup=${security_group}' -var='aws_region=${aws_region}' -var='count_var=${instances_to_add}' -var='serviceName=${service_int_api}' -var='serviceVersion=${serviceVersion}'"
 
-                                   // sh "terraform apply -auto-approve"
+                           // sh "terraform apply -auto-approve"
 
                                 
                             }
