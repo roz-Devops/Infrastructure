@@ -4,5 +4,7 @@ terraform {
         workspaces {
             name = "my-app" # name for your app's state.
         }
+        key    = "terraform.tfstate"
+        region = "us-east-2"
     }
 }
