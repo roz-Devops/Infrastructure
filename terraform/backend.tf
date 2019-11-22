@@ -8,3 +8,6 @@ terraform {
       
     }
 }
+
+variable "aws_region" { }
+
