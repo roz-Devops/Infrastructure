@@ -19,9 +19,7 @@ pipeline {
       TF_VAR_serviceVersion=''
       TF_VAR_aws_region=''
   }
-    agent {
-        label 'master'
-    }
+    agent any
     stages {
         stage ('Checkout') {
             steps {
