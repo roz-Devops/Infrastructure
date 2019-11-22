@@ -5,9 +5,9 @@ terraform {
         workspaces {
             name = "my-app" # name for your app's state.
             }
-      
+      variable "aws_region" { }
+
     }
 }
 
-variable "aws_region" { }
 
