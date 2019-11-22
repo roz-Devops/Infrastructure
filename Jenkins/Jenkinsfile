@@ -123,10 +123,10 @@ pipeline {
                        
          //     sh "terraform init -backend=true -backend-config="aws_vpc_id=$TF_VAR_aws_vpc_id" -backend-config="securitygroup='${security_group}'" -backend-config="aws_region='${aws_region}'" -backend-config="count_var='${instances_to_add}'" -backend-config="serviceName='${service_int_api}'" 
                        
-                               sh "terraform init"
+                               sh "-backend-config=aws_region='us-east-2' terraform init"
                                                    
                            //    sh "export TF_INPUT=0"                               
-                       sh "-backend-config=aws_region='us-east-2' terraform apply -auto-approve"
+                       sh "terraform apply -auto-approve"
 
                        if ( currentCount < instance_count ) {
                           
