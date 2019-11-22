@@ -111,7 +111,15 @@ pipeline {
                        //put string into the file:
     //writeFile(file:'terraform.tfvars', text: json)
                        
-                               sh "terraform init"
+                       
+              sh "terraform init \
+ -backend-config="aws_vpc_id="${aws_vpc}" \
+ -backend-config="securitygroup='${security_group}' \
+ -backend-config="aws_region='${aws_region}' \
+ -backend-config="count_var='${instances_to_add}' \
+ -backend-config="serviceName='${service_int_api}' 
+                       
+                              // sh "terraform init"
                                sh "export TF_VAR_aws_region='${aws_region}'"
                                sh "export TF_VAR_aws_vpc_id='${aws_vpc}'"
                                sh "export TF_VAR_serviceName='${service_int_api}'"
@@ -128,7 +136,7 @@ pipeline {
                                //     sh "terraform validate"
                                     // sh "terraform plan"
                                  //  sh "terraform apply -auto-approve -var 'envName = ${envName}'"
-                               //sh "terraform apply -auto-approve"
+                               sh "terraform apply -auto-approve"
                          //      sh "terraform apply -auto-approve"
                           //  sh "terraform validate -var-file=terraform.tfvars"
                         //    sh " TF_VAR_aws_region='${aws_region}' TF_VAR_securitygroup='${security_group}' TF_VAR_aws_vpc_id='${aws_vpc}' TF_VAR_serviceName='${service_int_api}' TF_VAR_count_var='${instances_to_add}' terraform apply -auto-approve"
