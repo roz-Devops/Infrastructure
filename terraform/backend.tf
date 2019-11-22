@@ -9,5 +9,5 @@ terraform {
     }
 }
 
-variable "aws_region" { type = string }
+variable "aws_region" "${var.aws_region}"
 
