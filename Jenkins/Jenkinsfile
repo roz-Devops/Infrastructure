@@ -114,10 +114,10 @@ pipeline {
                        
               sh "terraform init \
  -backend-config="aws_vpc_id="${aws_vpc}" \
- -backend-config="securitygroup='${security_group}' \
- -backend-config="aws_region='${aws_region}' \
- -backend-config="count_var='${instances_to_add}' \
- -backend-config="serviceName='${service_int_api}' 
+ -backend-config="securitygroup='${security_group}'" \
+ -backend-config="aws_region='${aws_region}'" \
+ -backend-config="count_var='${instances_to_add}'" \
+ -backend-config="serviceName='${service_int_api}'" 
                        
                               // sh "terraform init"
                                sh "export TF_VAR_aws_region='${aws_region}'"
