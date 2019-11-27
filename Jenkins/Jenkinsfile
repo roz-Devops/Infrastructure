@@ -14,12 +14,8 @@ pipeline {
     options {
         timeout(time: 30, unit: 'MINUTES')
     }
-   environment {
-      TF_VAR_aws_vpc_id =''
-      TF_VAR_serviceVersion=''
-      TF_VAR_aws_region=''
-  }
-    agent any
+   
+    agent master
     stages {
         stage ('Checkout') {
             steps {
@@ -34,7 +30,7 @@ pipeline {
         stage ('Load release json') {
             steps {
                 script {
-                             sh 'ls'
+                        sh 'ls'
                         sh 'pwd'
                     dir('infrastructure') {
                         sh 'ls'
@@ -71,11 +67,9 @@ pipeline {
                         echo (" service version is : ${serviceVersion}")
                         echo (" service service_int_api is : ${service_int_api}")
                               sh "ls /var/jenkins_home/${service_int_api}_${serviceVersion}.tar"
-                            if( fileExists ("/var/jenkins_home/${service_int_api}_${serviceVersion}.tar")){
-                              println("Artifact is exists : ${service_int_api}_${serviceVersion}.tar")
-
-                   //     sh "ls /mnt/artifacts/dev/${service_int_api}_${serviceVersion}.tar"
-                }
+                              if( fileExists ("/var/jenkins_home/${service_int_api}_${serviceVersion}.tar")){
+                                  println("Artifact is exists : ${service_int_api}_${serviceVersion}.tar")
+                                }
                    else{    println("Artifact not exists ${service_int_api}_${serviceVersion}.tar")
                             currentBuild.result = 'FAILURE'
                         }
@@ -89,65 +83,31 @@ pipeline {
                     dir ('infrastructure/terraform') {
                         int currentCount = sh script: "aws ec2 describe-instances --query 'Reservations[*].Instances[*].[InstanceId]' --region ${aws_region} --filters Name=instance-state-name,Values=running --output text | wc -l" , returnStdout: true
                    // int currentCount = 0
-                         //sh "terraform refresh -target='aws_instance.app'"
                        // sh "terraform state list"
-                       // sh "terraform plan"
+    
                             int instance_count = releaseFile["release"]["services"]["${service_int_api}"]['instance_count']
                           //  sh "sed -i 's/REGION/${aws_region}/g' inventory.aws_ec2.yml"
                           //  int currentCount = sh script: "ansible-inventory -i inventory.aws_ec2.yml --list | grep Service_${service_int_api} | --output text | wc -l", returnStdout: true
                              echo (" currentCount : ${currentCount}")
                               echo (" instance_count : ${instance_count}")
                             int instances_to_add = instance_count - currentCount
-                //       def data =[ 'envName' {"${envName}"}, \
-                  //        'aws_vpc_id' {"${aws_vpc}"}, \
-                    //      'securitygroup' {"${security_group}"}, \
-                      //    'aws_region' {"${aws_region}"}, \
-                     //     'count_var' {"${instances_to_add}"}, \
-                      //    'serviceName' {"${service_int_api}"}, \
-                        //          'serviceVersion' {"${serviceVersion}"} ]
-
-    //but if writeJSON not supported by your version:
-    //convert maps/arrays to json formatted string
-    //def json = JsonOutput.toJson(data)
-    //if you need pretty print (multiline) json
-  //  json = JsonOutput.prettyPrint(json)
-                       //put string into the file:
-    //writeFile(file:'terraform.tfvars', text: json)
-                       
-                         sh "export TF_VAR_aws_region='${aws_region}'"
-                               sh "export TF_VAR_aws_vpc_id='${aws_vpc}'"
-                               sh "export TF_VAR_serviceName='${service_int_api}'"
-                               sh "export TF_VAR_serviceVersion='${serviceVersion}'"
-                               sh "export TF_VAR_securitygroup='${security_group}'"
-                               sh "export TF_VAR_count_var='${instances_to_add}'"         
-                       
-         //     sh "terraform init -backend=true -backend-config="aws_vpc_id=$TF_VAR_aws_vpc_id" -backend-config="securitygroup='${security_group}'" -backend-config="aws_region='${aws_region}'" -backend-config="count_var='${instances_to_add}'" -backend-config="serviceName='${service_int_api}'" 
-                     sh "  terraform plan  -input=true -var=aws_region='us-east-2' "
+                            sh "  terraform plan  -input=true -var=aws_region='us-east-2' "
                             //   sh "-backend-config=aws_region='us-east-2' terraform init"
-                                                   
-                           //    sh "export TF_INPUT=0"                               
-                    //   sh "terraform apply -auto-approve"
-
+                               
                        if ( currentCount < instance_count ) {
                           
                                echo (" instances_to_add : ${instances_to_add}")
                                 
                                //     sh "terraform validate"
                                     // sh "terraform plan"
-                                 //  sh "terraform apply -auto-approve -var 'envName = ${envName}'"
-                               sh "terraform apply -auto-approve"
-                         //      sh "terraform apply -auto-approve"
-                          //  sh "terraform validate -var-file=terraform.tfvars"
-                        //    sh " TF_VAR_aws_region='${aws_region}' TF_VAR_securitygroup='${security_group}' TF_VAR_aws_vpc_id='${aws_vpc}' TF_VAR_serviceName='${service_int_api}' TF_VAR_count_var='${instances_to_add}' terraform apply -auto-approve"
-
-                                
+                               sh "terraform apply -auto-approve -var='envName=${envName}' -var='aws_vpc_id=${aws_vpc}' -var='securitygroup=${security_group}' -var='aws_region=${aws_region}' -var='count_var=${instances_to_add}' -var='serviceName=${service_int_api}' -var='serviceVersion=${serviceVersion}'"
                             }
                             if ( currentCount > instance_count ) {
                                 // remove instances
-                        
-                             echo "Lets reduce instances" 
+                         def running_instances = sh script: "aws ec2 describe-instances --query 'Reservations[*].Instances[*].[InstanceId]' --region ${aws_region} --filters Name=instance-state-name,Values=running --output json", returnStdout: true
+                             echo (" running_instances : ${running_instances}")
+                               echo "Lets reduce instances" 
                            //  sh "terraform destroy -auto-approve" 
-                             sh "terraform state list"
                             }
                        
                             else {
@@ -162,7 +122,7 @@ pipeline {
             steps {
                 script {
                     dir('infrastructure/ansible') {
-                                               print("ansible")
+                        print("ansible")
 
                         for ( service in service_int_api ) {
                             sh "echo [${service}] > hosts"
