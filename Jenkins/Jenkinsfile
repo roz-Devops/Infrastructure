@@ -91,7 +91,7 @@ pipeline {
                              echo (" currentCount : ${currentCount}")
                               echo (" instance_count : ${instance_count}")
                             int instances_to_add = instance_count - currentCount
-                            sh "  terraform plan  -input=true -var=aws_region='us-east-2' "
+                            sh "terraform plan -var='envName=${envName}' -var='aws_vpc_id=${aws_vpc}' -var='securitygroup=${security_group}' -var='aws_region=${aws_region}' -var='count_var=${instances_to_add}' -var='serviceName=${service_int_api}' -var='serviceVersion=${serviceVersion}'"
                             //   sh "-backend-config=aws_region='us-east-2' terraform init"
                                
                        if ( currentCount < instance_count ) {
