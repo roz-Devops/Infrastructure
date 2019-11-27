@@ -113,7 +113,7 @@ pipeline {
                                echo "Lets reduce instances" 
                            //  sh "terraform destroy -auto-approve" 
                                
-                             for (instance_id in $(aws ec2 describe-instances --query 'Reservations[*].Instances[*].[InstanceId]' --region ${aws_region} --filters Name=instance-state-name,Values=running --output text' --output text))
+                             for (instance_id in $running_instances)
                                        
                                              
                                            if(num_ins_to_terminate >0 && $running_instances[num_ins_to_terminate] == instance_id ){                
