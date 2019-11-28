@@ -115,11 +115,12 @@ pipeline {
                                   echo ("i : ${i}")
                                   sh "aws ec2 terminate-instances --instance-ids ${running_ins_ids[i]}"
                            }
+                            }
                             else {
                                 println("[INFO] Instnaces amount are aligned")
                             }
                         
-                    }
+                    
                 }
             }
         }
