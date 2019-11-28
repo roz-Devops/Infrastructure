@@ -118,7 +118,7 @@ pipeline {
                         //      sh " read -a arr <<< $running_instances "
                              
                                
-                               def values = $running_instances.split('\n')
+                               def values = running_instances.split('\n')
 
 
                                echo (" instances_arr : ${values}")
