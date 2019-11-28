@@ -85,14 +85,14 @@ pipeline {
                    // int aws_currentCount = 0
                        // sh "terraform state list"
     
-                            int required_ins_count = releaseFile["release"]["services"]["${service_int_api}"]['required_ins_count']
+                            int required_ins_count = releaseFile["release"]["services"]["${service_int_api}"]['instance_count']
                           //  sh "sed -i 's/REGION/${aws_region}/g' inventory.aws_ec2.yml"
                           //  int aws_currentCount = sh script: "ansible-inventory -i inventory.aws_ec2.yml --list | grep Service_${service_int_api} | --output text | wc -l", returnStdout: true
-                             echo (" aws_currentCount : ${aws_currentCount}")
-                              echo (" required_ins_count : ${required_ins_count}")
+                            echo (" aws_currentCount : ${aws_currentCount}")
+                            echo (" required_ins_count : ${required_ins_count}")
                             int instances_to_add = required_ins_count - aws_currentCount
-                       sh "terraform init"  
-                       if ( aws_currentCount < required_ins_count ) {
+                            sh "terraform init"  
+                         if ( aws_currentCount < required_ins_count ) {
                           
                                echo (" instances_to_add : ${instances_to_add}")
                                  
@@ -100,12 +100,12 @@ pipeline {
                                     // sh "terraform plan"
                                sh "terraform apply -auto-approve -var='envName=${envName}' -var='aws_vpc_id=${aws_vpc}' -var='securitygroup=${security_group}' -var='aws_region=${aws_region}' -var='count_var=${instances_to_add}' -var='serviceName=${service_int_api}' -var='serviceVersion=${serviceVersion}'"
                             }
-                        else if ( aws_currentCount > required_ins_count ) {
+                         else if ( aws_currentCount > required_ins_count ) {
                                 // remove instances
-                                def running_instances_list = sh script: "aws ec2 describe-instances --query 'Reservations[*].Instances[*].[InstanceId]' --region ${aws_region} --filters Name=instance-state-name,Values=running --output text", returnStdout: true
-                                echo "Lets reduce instances" 
-                               def running_ins_ids = []
-                               running_ins_ids = running_instances_list.split('\n')
+                              def running_instances_list = sh script: "aws ec2 describe-instances --query 'Reservations[*].Instances[*].[InstanceId]' --region ${aws_region} --filters Name=instance-state-name,Values=running --output text", returnStdout: true
+                              echo "Lets reduce instances" 
+                              def running_ins_ids = []
+                              running_ins_ids = running_instances_list.split('\n')
 
 
                                echo (" instances_arr : ${running_ins_ids}")
@@ -116,15 +116,15 @@ pipeline {
                                   sh "aws ec2 terminate-instances --instance-ids ${running_ins_ids[i]}"
                            }
                             }
-                          else {
+                         else {
                                 println("[INFO] Instnaces amount are aligned")
                             }
                         
                     
                 }
             }
-        }
-        }     
+         }
+      }     
         stage ('Deploy Services') {
             steps {
                 script {
