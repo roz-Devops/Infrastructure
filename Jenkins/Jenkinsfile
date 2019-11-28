@@ -121,7 +121,7 @@ pipeline {
                                def values = $running_instances.split('\n')
 
 
-                               echo (" instances_arr : ${running_instances}")
+                               echo (" instances_arr : ${values}")
                            
                                
                                
