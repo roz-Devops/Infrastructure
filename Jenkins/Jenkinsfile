@@ -126,8 +126,8 @@ pipeline {
                                
                                
                                
-                             //  for (instance_id in ${running_instances}) {
-                              //         echo (" instance_id : ${instance_id}")
+                               for (instance_id in ${values}) {
+                                      echo (" instance_id : ${instance_id}")
                                //                echo (" instance_id[num_ins_to_terminate] : ${running_instances}[${num_ins_to_terminate}]")
                                        //    if(num_ins_to_terminate >0 && $running_instances[num_ins_to_terminate] == instance_id ){                
                                          //            sh"aws ec2 terminate-instances --instance-ids $running_instances[num_ins_to_terminate]"
@@ -136,7 +136,7 @@ pipeline {
                                            //           }
                                                     
 
-                       //     }
+                           }
                        
                       //      else {
                                 println("[INFO] Instnaces amount are aligned")
