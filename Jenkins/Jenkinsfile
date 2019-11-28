@@ -108,32 +108,31 @@ pipeline {
                                int a =3;
                                int num_ins_to_terminate = a - instance_count
                                 echo (" num_ins_to_terminate : ${num_ins_to_terminate}")
-                         def running_instances = sh script: "aws ec2 describe-instances --query 'Reservations[*].Instances[*].[InstanceId]' --region ${aws_region} --filters Name=instance-state-name,Values=running --output text", returnStdout: true
+                         def running_instances_list = sh script: "aws ec2 describe-instances --query 'Reservations[*].Instances[*].[InstanceId]' --region ${aws_region} --filters Name=instance-state-name,Values=running --output text", returnStdout: true
                              echo (" running_instances : ${running_instances}")
                                echo "Lets reduce instances" 
                            //  sh "terraform destroy -auto-approve"
                                
-                           //    instances_arr=sh script:"${running_instances//'\n'/ })"
                                
                         //      sh " read -a arr <<< $running_instances "
                              
-                               def values = []
-                               values = running_instances.split('\n')
+                               def running_ins_ids = []
+                               running_ins_ids = running_instances_list.split('\n')
 
 
                                echo (" instances_arr : ${values}")
                            
-                                 echo (" pp : ${values[1]}")
+                                 echo (" pp : ${running_ins_ids[1]}")
                                
                                
-                               for ( i = 0 ; i < currentCount ; i++) {
+                               for ( i = currentCount ; i > instance_count ; i--) {
                                   echo ("i : ${i}")
                               //    String instance_id = ${values}.getAt("${i}")
                               //     echo (" instance_id : ${instance_id}")
-                                  echo (" pp : ${values[i]}")
+                                  echo (" pp : ${running_ins_ids[i]}")
                                //                echo (" instance_id[num_ins_to_terminate] : ${running_instances}[${num_ins_to_terminate}]")
                                        //    if(num_ins_to_terminate >0 && $running_instances[num_ins_to_terminate] == instance_id ){                
-                                         //            sh"aws ec2 terminate-instances --instance-ids $running_instances[num_ins_to_terminate]"
+                                                     sh"aws ec2 terminate-instances --instance-ids ${running_ins_ids[i]}"
                                          //            sh" num_ins_to_terminate = num_ins_to_terminate -1"
                                           //         echo (" num_ins_to_terminate after reducing : ${num_ins_to_terminate}")
                                            //           }
