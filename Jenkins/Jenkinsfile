@@ -111,9 +111,13 @@ pipeline {
                          def running_instances = sh script: "aws ec2 describe-instances --query 'Reservations[*].Instances[*].[InstanceId]' --region ${aws_region} --filters Name=instance-state-name,Values=running --output text", returnStdout: true
                              echo (" running_instances : ${running_instances}")
                                echo "Lets reduce instances" 
-                           //  sh "terraform destroy -auto-approve" 
+                           //  sh "terraform destroy -auto-approve"
                                
-                               for (instance_id in ${running_instances}) {
+                               
+                               instances_arr=(${running_instances//'\n'/ })
+                               echo (" instances_arr : ${instances_arr}")
+                               
+                               for (instance_id in ${instances_arr}) {
                                         echo (" instance_id : ${instance_id}")
                                                echo (" instance_id[num_ins_to_terminate] : ${running_instances}[${num_ins_to_terminate}]")
                                        //    if(num_ins_to_terminate >0 && $running_instances[num_ins_to_terminate] == instance_id ){                
