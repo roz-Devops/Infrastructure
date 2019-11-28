@@ -81,18 +81,18 @@ pipeline {
             steps {
                 script {
                     dir ('infrastructure/terraform') {
-                        int currentCount = sh script: "aws ec2 describe-instances --query 'Reservations[*].Instances[*].[InstanceId]' --region ${aws_region} --filters Name=instance-state-name,Values=running --output text | wc -l" , returnStdout: true
-                   // int currentCount = 0
+                        int aws_currentCount = sh script: "aws ec2 describe-instances --query 'Reservations[*].Instances[*].[InstanceId]' --region ${aws_region} --filters Name=instance-state-name,Values=running --output text | wc -l" , returnStdout: true
+                   // int aws_currentCount = 0
                        // sh "terraform state list"
     
-                            int instance_count = releaseFile["release"]["services"]["${service_int_api}"]['instance_count']
+                            int required_ins_count = releaseFile["release"]["services"]["${service_int_api}"]['required_ins_count']
                           //  sh "sed -i 's/REGION/${aws_region}/g' inventory.aws_ec2.yml"
-                          //  int currentCount = sh script: "ansible-inventory -i inventory.aws_ec2.yml --list | grep Service_${service_int_api} | --output text | wc -l", returnStdout: true
-                             echo (" currentCount : ${currentCount}")
-                              echo (" instance_count : ${instance_count}")
-                            int instances_to_add = instance_count - currentCount
+                          //  int aws_currentCount = sh script: "ansible-inventory -i inventory.aws_ec2.yml --list | grep Service_${service_int_api} | --output text | wc -l", returnStdout: true
+                             echo (" aws_currentCount : ${aws_currentCount}")
+                              echo (" required_ins_count : ${required_ins_count}")
+                            int instances_to_add = required_ins_count - aws_currentCount
                        sh "terraform init"  
-                       if ( currentCount < instance_count ) {
+                       if ( aws_currentCount < required_ins_count ) {
                           
                                echo (" instances_to_add : ${instances_to_add}")
                                  
@@ -100,7 +100,7 @@ pipeline {
                                     // sh "terraform plan"
                                sh "terraform apply -auto-approve -var='envName=${envName}' -var='aws_vpc_id=${aws_vpc}' -var='securitygroup=${security_group}' -var='aws_region=${aws_region}' -var='count_var=${instances_to_add}' -var='serviceName=${service_int_api}' -var='serviceVersion=${serviceVersion}'"
                             }
-                        else if ( currentCount > instance_count ) {
+                        else if ( aws_currentCount > required_ins_count ) {
                                 // remove instances
                                 def running_instances_list = sh script: "aws ec2 describe-instances --query 'Reservations[*].Instances[*].[InstanceId]' --region ${aws_region} --filters Name=instance-state-name,Values=running --output text", returnStdout: true
                                 echo "Lets reduce instances" 
@@ -111,7 +111,7 @@ pipeline {
                                echo (" instances_arr : ${running_ins_ids}")
                                         
                                
-                               for ( i = currentCount-1 ; i > instance_count-1 ; i--) {
+                               for ( i = aws_currentCount-1 ; i >= required_ins_count ; i--) {
                                   echo ("i : ${i}")
                                   sh "aws ec2 terminate-instances --instance-ids ${running_ins_ids[i]}"
                            }
@@ -130,13 +130,13 @@ pipeline {
                 script {
                     dir('infrastructure/ansible') {
                         print("ansible")
+                       service = "intapi"
 
-                        for ( service in service_int_api ) {
                             sh "echo [${service}] > hosts"
                             configVersion = releaseFile["release"]["services"]["${service}"]["configuration"]
                             dir('Configuration') {
                                 sh "git checkout ${configVersion}"
-                            }
+
                             sh "mkdir -p ./roles/ansible/${service}/files"
                             sh "cp ../../Configuration/${service}/*.* ./roles/${service}/files"
                             tagList = releaseFile["release"]["services"]["${service}"]["servers"]
