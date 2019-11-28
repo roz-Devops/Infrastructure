@@ -125,9 +125,9 @@ pipeline {
 
                             }
                        
-                            else {
+                      //      else {
                                 println("[INFO] Instnaces amount are aligned")
-                            }
+                         //   }
                         
                     }
                 }
