@@ -115,7 +115,7 @@ pipeline {
                                
                            //    instances_arr=sh script:"${running_instances//'\n'/ })"
                                
-                               read -a arr <<< $line
+                              sh " read -a arr <<< $line "
 
                                echo (" instances_arr : ${arr}")
                                
