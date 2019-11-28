@@ -100,7 +100,7 @@ pipeline {
                                     // sh "terraform plan"
                                sh "terraform apply -auto-approve -var='envName=${envName}' -var='aws_vpc_id=${aws_vpc}' -var='securitygroup=${security_group}' -var='aws_region=${aws_region}' -var='count_var=${instances_to_add}' -var='serviceName=${service_int_api}' -var='serviceVersion=${serviceVersion}'"
                             }
-                            if ( currentCount > instance_count ) {
+                        else if ( currentCount > instance_count ) {
                                 // remove instances
                                 def running_instances_list = sh script: "aws ec2 describe-instances --query 'Reservations[*].Instances[*].[InstanceId]' --region ${aws_region} --filters Name=instance-state-name,Values=running --output text", returnStdout: true
                                 echo "Lets reduce instances" 
@@ -116,7 +116,7 @@ pipeline {
                                   sh "aws ec2 terminate-instances --instance-ids ${running_ins_ids[i]}"
                            }
                             }
-                            else {
+                          else {
                                 println("[INFO] Instnaces amount are aligned")
                             }
                         
