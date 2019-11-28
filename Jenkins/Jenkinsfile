@@ -128,7 +128,7 @@ pipeline {
                                
                                for ( i = 0 ; i < currentCount ; i++) {
                                   echo ("i : ${i}")
-                                      echo (" instance_id : ${values}.getAt(i)")
+                                  echo (" instance_id : ${values}.getAt(${i})")
                                //                echo (" instance_id[num_ins_to_terminate] : ${running_instances}[${num_ins_to_terminate}]")
                                        //    if(num_ins_to_terminate >0 && $running_instances[num_ins_to_terminate] == instance_id ){                
                                          //            sh"aws ec2 terminate-instances --instance-ids $running_instances[num_ins_to_terminate]"
