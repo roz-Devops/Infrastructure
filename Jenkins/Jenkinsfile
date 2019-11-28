@@ -118,7 +118,7 @@ pipeline {
                         //      sh " read -a arr <<< $running_instances "
                              
 
-                               echo (" instances_arr : ${running_instances}[1]")
+                               echo (" instances_arr : ${running_instances[1]}")
                            
                            //    for (instance_id in ${instances_arr}) {
                              //           echo (" instance_id : ${instance_id}")
