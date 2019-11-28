@@ -116,12 +116,10 @@ pipeline {
                            //    instances_arr=sh script:"${running_instances//'\n'/ })"
                                
                         //      sh " read -a arr <<< $running_instances "
-                               sh "arr=(${running_instances}) " 
+                             
 
-                               echo (" instances_arr : ${arr}")
-                               for (i in $arr){
-                                  echo " i : ${i}"
-                               }
+                               echo (" instances_arr : ${running_instances}[1]")
+                           
                            //    for (instance_id in ${instances_arr}) {
                              //           echo (" instance_id : ${instance_id}")
                                //                echo (" instance_id[num_ins_to_terminate] : ${running_instances}[${num_ins_to_terminate}]")
