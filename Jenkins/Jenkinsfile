@@ -114,7 +114,10 @@ pipeline {
                            //  sh "terraform destroy -auto-approve"
                                
                                instances_arr=sh script:"${running_instances//'\n'/ })"
-                               echo (" instances_arr : ${instances_arr}")
+                               
+                               read -a arr <<< $line
+
+                               echo (" instances_arr : ${arr}")
                                
                                for (instance_id in ${instances_arr}) {
                                         echo (" instance_id : ${instance_id}")
