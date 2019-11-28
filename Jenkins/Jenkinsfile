@@ -117,7 +117,7 @@ pipeline {
                                
                         //      sh " read -a arr <<< $running_instances "
                              
-                               def values = new String[${currentCount}]
+                               def values = new String["${currentCount}"]
                                values = running_instances.split('\n')
 
 
