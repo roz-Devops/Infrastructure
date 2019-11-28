@@ -108,7 +108,7 @@ pipeline {
                                int a =3;
                                int num_ins_to_terminate = a - instance_count
                                 echo (" num_ins_to_terminate : ${num_ins_to_terminate}")
-                         def running_instances = sh script: "aws ec2 describe-instances --query 'Reservations[*].Instances[*].[InstanceId]' --region ${aws_region} --filters Name=instance-state-name,Values=running --output json", returnStdout: true
+                         def running_instances = sh script: "aws ec2 describe-instances --query 'Reservations[*].Instances[*].[InstanceId][2]' --region ${aws_region} --filters Name=instance-state-name,Values=running --output json", returnStdout: true
                              echo (" running_instances : ${running_instances}[0]")
                                echo "Lets reduce instances" 
                            //  sh "terraform destroy -auto-approve"
