@@ -98,7 +98,7 @@ pipeline {
                        if ( currentCount < instance_count ) {
                           
                                echo (" instances_to_add : ${instances_to_add}")
-                                
+                                 
                                //     sh "terraform validate"
                                     // sh "terraform plan"
                                sh "terraform apply -auto-approve -var='envName=${envName}' -var='aws_vpc_id=${aws_vpc}' -var='securitygroup=${security_group}' -var='aws_region=${aws_region}' -var='count_var=${instances_to_add}' -var='serviceName=${service_int_api}' -var='serviceVersion=${serviceVersion}'"
@@ -133,6 +133,7 @@ pipeline {
                 }
             }
         }
+        }     
         stage ('Deploy Services') {
             steps {
                 script {
