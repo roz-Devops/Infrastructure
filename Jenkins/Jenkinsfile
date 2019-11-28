@@ -113,7 +113,7 @@ pipeline {
                                echo "Lets reduce instances" 
                            //  sh "terraform destroy -auto-approve"
                                
-                               instances_arr=sh script:"${running_instances//'\n'/ })"
+                           //    instances_arr=sh script:"${running_instances//'\n'/ })"
                                
                                read -a arr <<< $line
 
