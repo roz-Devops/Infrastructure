@@ -119,8 +119,8 @@ pipeline {
                                sh "arr=($running_instances) " 
 
                                echo (" instances_arr : ${arr}")
-                               for (i in ${arr}){
-                                   echo (" i : $i")
+                               for (i in $arr){
+                                  echo (" i : ${i}")
                                }
                            //    for (instance_id in ${instances_arr}) {
                              //           echo (" instance_id : ${instance_id}")
