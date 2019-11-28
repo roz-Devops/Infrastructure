@@ -120,7 +120,7 @@ pipeline {
                                running_ins_ids = running_instances_list.split('\n')
 
 
-                               echo (" instances_arr : ${values}")
+                               echo (" instances_arr : ${running_ins_ids}")
                            
                                  echo (" pp : ${running_ins_ids[1]}")
                                
