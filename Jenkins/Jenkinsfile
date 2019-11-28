@@ -126,7 +126,7 @@ pipeline {
                                  echo (" pp : ${values[1]}")
                                
                                
-                               for ( i = 0 ; i < currentCount ; i++) {
+                               for ( int i = 0 ; i < currentCount ; i++) {
                                   echo ("i : ${i}")
                               //    String instance_id = ${values}.getAt("${i}")
                               //     echo (" instance_id : ${instance_id}")
