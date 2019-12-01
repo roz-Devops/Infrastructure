@@ -142,16 +142,9 @@ pipeline {
 
                             sh "mkdir -p ./roles/ansible/${service}/files"
                             sh "cp ../../Configuration/${service}/*.* ./roles/${service}/files"
-                            tagList = releaseFile["release"]["services"]["${service}"]["servers"]
-                                // if ( ipList.isEmpty() ) {
-                                //     println("This ip list is empty for ${service}")
-                                //     currentBuild.result = 'FAILURE'
-                                // } else {
-                                //     for ( ip in ipList ) {
-                                //         sh "echo ${ip} >> hosts"
-                                //     }
-                                sh "ansible-playbook -i hosts main.yml --extra-vars 'service=${service}'"
-                                }
+             
+                           sh "ansible-playbook -i hosts main.yml --extra-vars 'service=${service}'"
+                           }
                         }
                     }
                 }
