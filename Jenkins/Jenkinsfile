@@ -146,9 +146,9 @@ pipeline {
                             sh "cp ${service}/*.* ../roles/${service}/files"
                                 sh 'ls'
                                 sh 'pwd'
-             
+                            }
                            sh "ansible-playbook -i hosts main.yml --extra-vars 'service=${service}'"
-                           }
+                           
                         }
                     }
                 }
