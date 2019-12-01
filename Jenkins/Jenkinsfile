@@ -141,7 +141,7 @@ pipeline {
                                 sh "git checkout ${configVersion}"
 
                             sh "mkdir -p ./roles/ansible/${service}/files"
-                            sh "cp ../../Configuration/${service}/*.* ./roles/${service}/files"
+                            sh "cp /${service}/*.* ./roles/${service}/files"
              
                            sh "ansible-playbook -i hosts main.yml --extra-vars 'service=${service}'"
                            }
