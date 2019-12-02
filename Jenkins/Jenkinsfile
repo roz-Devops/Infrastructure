@@ -133,7 +133,7 @@ pipeline {
                         print("ansible")
                        service = "intapi"
 
-                            sh "echo [${service}] > hosts"
+                         //   sh "echo [${service}] > hosts"
                             configVersion = releaseFile["release"]["services"]["${service}"]["configuration"]
                             dir('Configuration') {
                                checkout([$class: 'GitSCM', branches: [[name: "*/${configVersion}"]], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'git_rd_cred', url: 'https://github.com/roz-Devops/Configuration.git']]])
@@ -147,7 +147,8 @@ pipeline {
                                 sh 'ls'
                                 sh 'pwd'
                             }
-                           sh "ansible-playbook -i hosts main.yml --extra-vars 'service=${service}'"
+                       sh "sed -i 's/REGION/${aws_region}/g' inventory.aws_ec2.yml"
+                           sh "ansible-playbook -i inventory.aws_ec2.yml main.yml --extra-vars 'service=${service}'"
                            
                         }
                     }
