@@ -3,7 +3,7 @@
   hosts: "Service_{{ service }}"
   gather_facts: false
   pre_tasks:
-    - local_action: wait_for port=22 host={% if ansible_ssh_host is defined %}{{ ansible_ssh_host }}{% else %}{{ inventory_hostname }}{% endif %}
+ #   - local_action: wait_for port=22 host={% if ansible_ssh_host is defined %}{{ ansible_ssh_host }}{% else %}{{ inventory_hostname }}{% endif %}
     - setup:
 
 - name: "Deploy {{ service }}"
