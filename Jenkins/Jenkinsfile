@@ -142,7 +142,7 @@ pipeline {
                             }
                            println "after config"
                            sh 'pwd'
-                              sh "mkdir -p ./${service}/files/"
+                              sh "mkdir -p ./roles/${service}/files/"
                               sh 'ls'
                               sh 'pwd'
                           //     sh "chmod -R 777 /${service}/"
