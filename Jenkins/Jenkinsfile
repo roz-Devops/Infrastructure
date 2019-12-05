@@ -140,11 +140,11 @@ pipeline {
   
                               //  sh "git checkout ${configVersion}"
 
-                            sh "mkdir ./roles/ansible/${service}/files"
+                            sh "mkdir -p ./roles/ansible/${service}/files/"
                                sh "chmod -R 777 ./roles/ansible/${service}/"
                                 sh 'ls'
                                 sh 'pwd'
-                            sh "cp ${service}/*.* ../roles/${service}/files"
+                            sh "cp ${service}/*.* ../roles/${service}/files/"
                                
                             }
                              sh 'ls'
