@@ -139,8 +139,9 @@ pipeline {
                                checkout([$class: 'GitSCM', branches: [[name: "*/${configVersion}"]], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'git_rd_cred', url: 'https://github.com/roz-Devops/Configuration.git']]])
   
                               //  sh "git checkout ${configVersion}"
-
-                            sh "mkdir -p ./roles/ansible/${service}/files"
+                             sh 'ls'
+                        sh 'pwd'
+                            sh "mkdir -p ./roles/ansible/${service}/files/"
                                sh "chmod -R 777 ./roles/ansible/${service}/"
                                 sh 'ls'
                                 sh 'pwd'
