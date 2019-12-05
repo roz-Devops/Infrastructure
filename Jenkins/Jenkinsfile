@@ -140,8 +140,9 @@ pipeline {
   
                               //  sh "git checkout ${configVersion}"
                             }
-                          
-                              sh "mkdir -p /${service}/files/"
+                           println "after config"
+                           sh 'pwd'
+                              sh "mkdir -p ./${service}/files/"
                               sh 'ls'
                               sh 'pwd'
                           //     sh "chmod -R 777 /${service}/"
