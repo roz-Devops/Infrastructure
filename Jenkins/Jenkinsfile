@@ -154,7 +154,7 @@ pipeline {
                              sh 'ls'
                                 sh 'pwd'
                        sh "sed -i 's/REGION/${aws_region}/g' inventory.aws_ec2.yml"
-                           sh "ansible-playbook -i inventory.aws_ec2.yml main.yml --extra-vars 'service=${service}'"
+                           sh "ansible-playbook -i inventory.aws_ec2.yml main.yml --extra-vars 'service=${service}' 'service_version=${serviceVersion}'"
                            
                         }
                     }
