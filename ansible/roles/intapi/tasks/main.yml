@@ -7,6 +7,7 @@
 - name: Start Container
   docker_container:
     name: "{{ service }}"
+    path: "/var/jenkins_home/${service_int_api}_${serviceVersion}.tar"
     image: "{{ service }}:{{ service_version }}"
     recreate: yes
     ports:
