@@ -148,7 +148,7 @@ pipeline {
                           //     sh "chmod -R 777 /${service}/"
                             //    sh 'ls'
                              //   sh 'pwd'
-                            sh "cp ./Configuration/${service}/*.* /ansible/roles/${service}/files/"
+                            sh "cp /Configuration/${service}/*.* /roles/${service}/files/"
                                
                             
                              sh 'ls'
