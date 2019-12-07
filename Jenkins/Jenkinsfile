@@ -70,6 +70,7 @@ pipeline {
                               sh "ls /var/jenkins_home/${service_int_api}_${serviceVersion}.tar"
                               if( fileExists ("/var/jenkins_home/${service_int_api}_${serviceVersion}.tar")){
                                   println("Artifact is exists : ${service_int_api}_${serviceVersion}.tar")
+                                  sh "cp /var/jenkins_home/${service_int_api}_${serviceVersion}.tar .ansible/roles/${service}"
                                 }
                    else{    println("Artifact not exists ${service_int_api}_${serviceVersion}.tar")
                             currentBuild.result = 'FAILURE'
