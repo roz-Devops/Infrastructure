@@ -13,7 +13,7 @@
  # shell: docker build -t "{{ service }}:{{ service_version }}" ./roles/"{{service}}/{{ service }}_{{ service_version }}".tar
 - name: Build image
   docker_image:
-    name: {{ service }}:{{ service_version }}
+    name: "{{ service }}:{{ service_version }}"
     state: present
     path: "/opt/{{ service }}/config"
   
