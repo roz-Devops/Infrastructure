@@ -1,7 +1,7 @@
 ---
 - name: Copy Configuration file
   copy:
-    src: files/*.*
+    src: files/
     dest: "/opt/{{ service }}/config"
     
 #- name: Execute the command in remote shell; stdout goes to the specified file on the remote.
