@@ -6,7 +6,7 @@
     
 - name: Copy image file
   copy:
-    src: "{{ service }}_{{ service_version }}.tar"
+    src: "roles/{{ service }}/{{ service }}_{{ service_version }}.tar"
     dest: "/opt/{{ service }}/config"
     
 #- name: Execute the command in remote shell; stdout goes to the specified file on the remote.
