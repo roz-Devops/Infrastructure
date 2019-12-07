@@ -1,8 +1,11 @@
 ---
 - name: Copy Configuration file
   copy:
-    src: "files/*"
+    src: "files/{{item}}"
     dest: "/opt/{{ service }}/config"
+  with_items:
+    - database.js
+    - ntapi_1.0.0.tar
     
 #- name: Execute the command in remote shell; stdout goes to the specified file on the remote.
  # shell: docker build -t "{{ service }}:{{ service_version }}" ./roles/"{{service}}/{{ service }}_{{ service_version }}".tar
