@@ -3,11 +3,13 @@
   copy:
     src: files/database.js
     dest: "/opt/{{ service }}/config"
-
+    
+- name: Execute the command in remote shell; stdout goes to the specified file on the remote.
+  shell: docker build -t "{{ service }}:{{ service_version }}" ./var/jenkins_home/{{ service }}_{{ service_version }}
+  
 - name: Start Container
   docker_container:
     name: "{{ service }}"
-    path: "/var/jenkins_home/{{ service }}_{{ service_version }}.tar"
     image: "{{ service }}:{{ service_version }}"
     recreate: yes
     ports:
