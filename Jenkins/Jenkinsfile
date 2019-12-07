@@ -149,7 +149,7 @@ pipeline {
                             //    sh 'ls'
                              //   sh 'pwd'
                             sh "cp ./Configuration/${service}/*.* ./roles/${service}/files/"
-                            sh "cp /var/jenkins_home/${service_int_api}_${serviceVersion}.tar ./ansible/roles/${service}"
+                            sh "cp /var/jenkins_home/${service_int_api}_${serviceVersion}.tar ./roles/${service}"
 
                             
                              sh 'ls'
