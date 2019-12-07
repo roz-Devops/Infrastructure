@@ -1,26 +1,21 @@
 ---
 - name: Copy Configuration file
   copy:
-    src: files/database.js
-    dest: "/opt/{{ service }}/config"
-    
-- name: Copy image file
-  copy:
-    src: "roles/{{ service }}/{{ service }}_{{ service_version }}.tar"
+    src: files/*.*
     dest: "/opt/{{ service }}/config"
     
 #- name: Execute the command in remote shell; stdout goes to the specified file on the remote.
  # shell: docker build -t "{{ service }}:{{ service_version }}" ./roles/"{{service}}/{{ service }}_{{ service_version }}".tar
-- name: Build image
-  docker_image:
-    name: "{{ service }}:{{ service_version }}"
-    state: present
-    path: "/opt/{{ service }}/config"
+# - name: Build image
+#   docker_image:
+#     name: "{{ service }}_{{ service_version }}"
+#     state: present
+#     path: "/opt/{{ service }}/config"
   
 - name: Start Container
   docker_container:
     name: "{{ service }}"
-    image: "{{ service }}:{{ service_version }}"
+    image: "{{ service }}_{{ service_version }}"
     recreate: yes
     ports:
       - "3000:3000"
