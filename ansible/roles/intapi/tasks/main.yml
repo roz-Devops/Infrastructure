@@ -11,7 +11,7 @@
 #     state: present
 #     path: "/opt/{{ service }}/config"
 - name: Execute the command in remote shell; stdout goes to the specified file on the remote.
-  shell: docker load --input /files/intapi_1.0.0.tar
+  shell: docker load --input /var/jenkins_home/intapi_1.0.0.tar
   
 - name: Start Container
   docker_container:
