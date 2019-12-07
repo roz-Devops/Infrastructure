@@ -11,7 +11,7 @@
     image: "{{ service }}:{{ service_version }}"
     recreate: yes
     ports:
-      - "{{ api_port }}:{{ api_port }}"
+      - "3000:3000"
     volumes:
       - "/opt/{{ service }}/config:{{ config_location }}"
     restart_policy:
