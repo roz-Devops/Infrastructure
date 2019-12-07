@@ -4,8 +4,18 @@
     src: files/database.js
     dest: "/opt/{{ service }}/config"
     
-- name: Execute the command in remote shell; stdout goes to the specified file on the remote.
-  shell: docker build -t "{{ service }}:{{ service_version }}" ./roles/"{{service}}/{{ service }}_{{ service_version }}".tar
+- name: Copy image file
+  copy:
+    src: "{{ service }}_{{ service_version }}.tar"
+    dest: "/opt/{{ service }}/config"
+    
+#- name: Execute the command in remote shell; stdout goes to the specified file on the remote.
+ # shell: docker build -t "{{ service }}:{{ service_version }}" ./roles/"{{service}}/{{ service }}_{{ service_version }}".tar
+- name: Build image
+  docker_image:
+    name: {{ service }}:{{ service_version }}
+    state: present
+    path: "/opt/{{ service }}/config"
   
 - name: Start Container
   docker_container:
