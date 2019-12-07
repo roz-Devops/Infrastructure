@@ -13,7 +13,7 @@
     ports:
       - "3000:3000"
     volumes:
-      - "/opt/{{ service }}/config:{{ config_location }}"
+      - "/opt/{{ service }}/config:/usr/src/app/config"
     restart_policy:
       unless-stopped
     interactive:
