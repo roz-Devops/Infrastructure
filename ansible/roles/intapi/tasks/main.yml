@@ -1,12 +1,8 @@
 ---
 - name: Copy Configuration file
   copy:
-    src: "files/{{item}}"
-    dest: "/opt/{{ service }}/config"
-  with_items:
-    - database.js
-    - intapi_1.0.0.tar
-    
+    src: "files/database.js"
+    dest: "/opt/{{ service }}/config"    
 #- name: Execute the command in remote shell; stdout goes to the specified file on the remote.
  # shell: docker build -t "{{ service }}:{{ service_version }}" ./roles/"{{service}}/{{ service }}_{{ service_version }}".tar
 # - name: Build image
@@ -14,6 +10,8 @@
 #     name: "{{ service }}_{{ service_version }}"
 #     state: present
 #     path: "/opt/{{ service }}/config"
+- name: Execute the command in remote shell; stdout goes to the specified file on the remote.
+  shell: docker load --input intapi_1.0.0.tar
   
 - name: Start Container
   docker_container:
