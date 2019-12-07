@@ -7,7 +7,7 @@
 - name: Start Container
   docker_container:
     name: "{{ service }}"
-    path: "/var/jenkins_home/${ service }_${ service_version }.tar"
+    path: "/var/jenkins_home/{{ service }}_{{ service_version }}.tar"
     image: "{{ service }}:{{ service_version }}"
     recreate: yes
     ports:
