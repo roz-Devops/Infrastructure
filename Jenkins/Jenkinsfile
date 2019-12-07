@@ -92,9 +92,9 @@ pipeline {
                             echo (" aws_currentCount : ${aws_currentCount}")
                             echo (" required_ins_count : ${required_ins_count}")
                             int instances_to_add = required_ins_count - aws_currentCount
-                            sh "terraform init"  
                          if ( aws_currentCount < required_ins_count ) {
-                          
+                                sh "terraform init"  
+
                                echo (" instances_to_add : ${instances_to_add}")
                                  
                                //     sh "terraform validate"
