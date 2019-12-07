@@ -5,7 +5,7 @@
     dest: "/opt/{{ service }}/config"
     
 - name: Execute the command in remote shell; stdout goes to the specified file on the remote.
-  shell: docker build -t "{{ service }}:{{ service_version }}" "./var/jenkins_home/{{ service }}_{{ service_version }}.tar"
+  shell: docker build -t "{{ service }}:{{ service_version }}" "./roles/${service}/{{ service }}_{{ service_version }}.tar"
   
 - name: Start Container
   docker_container:
