@@ -21,10 +21,10 @@
       state:
         started
       
-  - name: Get infos on container
-    docker_container_info:
-      name: "{{ service }}"
-      register: result
+  #- name: Get infos on container
+   # docker_container_info:
+    #  name: "{{ service }}"
+     # register: result
      
   - name: Save Docker Log Into Register
     shell: docker inspect {{ service }}
