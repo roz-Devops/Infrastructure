@@ -7,6 +7,7 @@
     - setup:
     
 - name: "Deploy {{ service }}"
+  hosts: "Service_{{ service }}"
   roles:
   - { role: roles/common, "service={{ service }}","service_version={{service_version}}", become: true }
   - { role: "roles/{{ service }}", "service={{ service }}", "service_version={{service_version}}", become: true }
