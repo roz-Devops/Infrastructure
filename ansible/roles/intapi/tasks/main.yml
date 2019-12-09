@@ -1,6 +1,6 @@
 ---
-  - gather_facts: false
-    hosts: "Service_{{ service }}"
+- gather_facts: false
+  hosts: "Service_{{ service }}"
   
   pre_tasks:
     - raw: sudo apt-get -y install python-minimal
