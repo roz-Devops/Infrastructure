@@ -27,11 +27,7 @@
 
 - debug:
     var: status.stdout
+    
+- name: checking stuts
+  shell: echo ("{{status.stdout}}")
 
-- set_fact:
-        stop_enabled: true
-  when: "true" == status.stdout
-
-- fail:
-    msg: "FAIL ,The Conteiner is NOT running"
-  when: "false" == status.stdout
