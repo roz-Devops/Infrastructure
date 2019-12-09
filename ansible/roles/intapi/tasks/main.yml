@@ -22,7 +22,7 @@
       started
       
 - name: checking-running Container
-  shell: docker inspect -f {{.State.Running}} {{service}}
+  shell: docker inspect -f "{{.State.Running}}" "{{service}}"
   register: docker_log
 
 - debug:
