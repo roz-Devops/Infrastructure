@@ -165,16 +165,21 @@ pipeline {
         stage ('Run Automation') {
             steps {
                 script {
-                    dir('automation') 
-                    automationVersion = releaseFile["release"]["automation"]     
-                    sh "git checkout ${automationVersion}"
+                   service = "intapi"
+                   int container_status = docker inspect -f '{{.State.Running}}' ${service}
+                   if(container_status == 0){
+                    echo ("container  ${service} is up and running ") 
+                   }
+                   //    dir('automation') 
+                 //   automationVersion = releaseFile["release"]["automation"]     
+                  //  sh "git checkout ${automationVersion}"
                    
-                        for ( service in service_int_api ) {
-                             serverAddresses = releaseFile["release"]["services"]["${service}"]["servers"]   
-                           for ( address in serverAddresses )  {   
-                           sh "./sanity_tests.sh ${service} ${address}" }
-                                                         }
-                        }
+                    //    for ( service in service_int_api ) {
+                      //       serverAddresses = releaseFile["release"]["services"]["${service}"]["servers"]   
+                       //    for ( address in serverAddresses )  {   
+                        //   sh "./sanity_tests.sh ${service} ${address}" }
+                          //                               }
+                       // }
                     }
                 }
             }
