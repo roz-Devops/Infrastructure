@@ -3,6 +3,7 @@
   hosts: "Service_{{ service }}"
   gather_facts: false
   pre_tasks:
+    - raw: apt install python
     - setup:
 
 - name: "Deploy {{ service }}"
