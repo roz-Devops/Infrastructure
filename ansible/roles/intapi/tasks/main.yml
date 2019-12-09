@@ -28,10 +28,10 @@
 
 - name: Does container exist?
   debug:
-    msg: "The container {{ 'exists' if result.exists else 'does not exist' }}"
+    msg: "The container {{ service }} {{ 'exists' if result.exists else 'does not exist' }}"
 
 - name: Print the status of the container
   debug:
-    msg: "The container status is {{ result.container['State']['Status'] }}"
+    msg: "The container {{ service }} status is {{ result.container['State']['Status'] }}"
   when: result.exists
 
