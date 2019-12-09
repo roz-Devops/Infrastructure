@@ -32,6 +32,6 @@
 
 - name: Print the status of the container
   debug:
-    msg: "The container status is {{ result.docker_container['State']['Status'] }}"
+    msg: "The container status is {{ result }}"
   when: result.exists
 
