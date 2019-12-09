@@ -22,7 +22,6 @@
       started
       
 - name: checking-running Container
-docker inspect --format={{ '{{.State.Running}}' }} {{service}}
   shell: docker inspect -f "{{.State.Running}}" "{{service}}"
   register: status
 
