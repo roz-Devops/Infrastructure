@@ -21,13 +21,17 @@
     state:
       started
       
-- name: checking-running Container
-  shell: docker inspect -f "{{.State.Running}}" "{{service}}"
-  register: status
+- name: Get infos on container
+  docker_container_info:
+    name: "{{ service }}"
+  register: result
 
-- debug:
-    var: status.stdout
-    
-- name: checking stuts
-  shell: echo ("{{status.stdout}}")
+- name: Does container exists?
+  debug:
+    msg: "The container {{ 'exists' if result.exists else 'does not exist' }}"
+
+- name: Print the status of the container
+  debug:
+    msg: "The container status is {{ result.docker_container['State']['Status'] }}"
+  when: result.exists
 
