@@ -6,9 +6,9 @@
   #  - raw: sudo apt install -qy python&& sudo apt install -qy python-pip&& sudo pip install docker-py
     - raw: sudo apt-get -y install python-simplejson
        register: py_simple_output
-     - raw: sudo apt-get -y install python-minimal
+    - raw: sudo apt-get -y install python-minimal
        register: py_minimal_output
-     - raw: sudo apt-get update
+    - raw: sudo apt-get update
        register: system_output
     
 - name: "Deploy {{ service }}"
