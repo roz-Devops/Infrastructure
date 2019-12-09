@@ -71,8 +71,7 @@ pipeline {
             steps {
                 script {
                     dir ('infrastructure/terraform') {
-                        int aws_currentCount = sh script: "aws ec2 describe-instances get-resources \
-    --tag-filters Key=Name,Values=intapi --query 'Reservations[*].Instances[*].[InstanceId]' --region ${aws_region}  --filters Name=instance-state-name,Values=running --output text | wc -l" , returnStdout: true
+                        int aws_currentCount = sh script: "aws ec2 describe-instances --query 'Reservations[*].Instances[*].[InstanceId]' --region ${aws_region} --filters 'Name=instance-state-name,Values=running' 'Name=Service,Values=intapi' --output text | wc -l" , returnStdout: true
    
                         int required_ins_count = releaseFile["release"]["services"]["${service}"]['instance_count']
                             echo (" aws_currentCount : ${aws_currentCount}")
