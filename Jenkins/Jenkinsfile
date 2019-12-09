@@ -24,18 +24,13 @@ pipeline {
                     dir ('infrastructure') {
                         checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'git_rd_cred', url: 'https://github.com/roz-Devops/Infrastructure.git']]])
                     } 
-                
                 }
             }
         }
         stage ('Load release json') {
             steps {
                 script {
-                        sh 'ls'
-                        sh 'pwd'
                     dir('infrastructure') {
-                        sh 'ls'
-                        sh 'pwd'
                         releaseFile = jsonParse(readFile("release.json"))
                         releaseName = releaseFile["release"]["name"]
                         releaseVersion = releaseFile["release"]["version"]
@@ -43,14 +38,9 @@ pipeline {
                         automationVersion = releaseFile["release"]["automation_version"]
                         envName = releaseFile["release"]["environment"]
                         //servicesList = releaseFile["release"]["services"].keySet()
-                        service_int_api = "intapi"
-                        println("Those Services will be deployed ${service_int_api}")
+                        service = "intapi"
+                        println("Those Services will be deployed ${service}")
                         print("The environment is ${envName}")
-                    
-                   
-                    //    sh "git checkout ${infrastructureVersion}"
-                        echo ("env starting")
-
                         environmentFile = jsonParse(readFile("environments.json"))
                         aws_region = environmentFile['environments']["${envName}"]['aws_region']
                         aws_vpc = environmentFile['environments']["${envName}"]['vpc_id']
@@ -61,101 +51,80 @@ pipeline {
             }
         }
         stage ('Verify artifacts exist') {
-        // validate artifacts in Nexus
             steps {
                 script {
-                        serviceVersion = releaseFile["release"]["services"]["${service_int_api}"]["version"]
+                        serviceVersion = releaseFile["release"]["services"]["${service}"]["version"]
                         echo (" service version is : ${serviceVersion}")
-                        echo (" service service_int_api is : ${service_int_api}")
-                              sh "ls /var/jenkins_home/${service_int_api}_${serviceVersion}.tar"
-                              if( fileExists ("/var/jenkins_home/${service_int_api}_${serviceVersion}.tar")){
-                                  println("Artifact is exists : ${service_int_api}_${serviceVersion}.tar")
-                              }
-                   else{    println("Artifact not exists ${service_int_api}_${serviceVersion}.tar")
-                            currentBuild.result = 'FAILURE'
+                        echo (" service service is : ${service}")
+                        sh "ls /var/jenkins_home/${service}_${serviceVersion}.tar"
+                        if( fileExists ("/var/jenkins_home/${service}_${serviceVersion}.tar")){
+                            println("Artifact is exists : ${service}_${serviceVersion}.tar")
                         }
+                	     else {    println("Artifact not exists ${service}_${serviceVersion}.tar")
+                           	       currentBuild.result = 'FAILURE'
+                       }
                     
-                }
-            }
+               }
+           }
         }
         stage ('Vaildate Instances amount') {
             steps {
                 script {
                     dir ('infrastructure/terraform') {
-                        int aws_currentCount = sh script: "aws ec2 describe-instances --query 'Reservations[*].Instances[*].[InstanceId]' --region ${aws_region} --filters Name=instance-state-name,Values=running --output text | wc -l" , returnStdout: true
-                   // int aws_currentCount = 0
-                       // sh "terraform state list"
-    
-                            int required_ins_count = releaseFile["release"]["services"]["${service_int_api}"]['instance_count']
-                          //  sh "sed -i 's/REGION/${aws_region}/g' inventory.aws_ec2.yml"
-                          //  int aws_currentCount = sh script: "ansible-inventory -i inventory.aws_ec2.yml --list | grep Service_${service_int_api} | --output text | wc -l", returnStdout: true
+                        int aws_currentCount = sh script: "aws ec2 describe-instances --query 'Reservations[*].Instances[*].[InstanceId]' --region ${aws_region} --filters Name=${service},Values=running --output text | wc -l" , returnStdout: true
+   
+                        int required_ins_count = releaseFile["release"]["services"]["${service}"]['instance_count']
                             echo (" aws_currentCount : ${aws_currentCount}")
                             echo (" required_ins_count : ${required_ins_count}")
-                            int instances_to_add = required_ins_count - aws_currentCount
+                        int instances_to_add = required_ins_count - aws_currentCount
                          if ( aws_currentCount < required_ins_count ) {
-                                sh "terraform init"  
-
+                               sh "terraform init"  
                                echo (" instances_to_add : ${instances_to_add}")
-                                 
                                //     sh "terraform validate"
-                                    // sh "terraform plan"
-                               sh "terraform apply -auto-approve -var='envName=${envName}' -var='aws_vpc_id=${aws_vpc}' -var='securitygroup=${security_group}' -var='aws_region=${aws_region}' -var='count_var=${instances_to_add}' -var='serviceName=${service_int_api}' -var='serviceVersion=${serviceVersion}'"
-                            }
+                               sh "terraform apply -auto-approve -var='envName=${envName}' -var='aws_vpc_id=${aws_vpc}' -var='securitygroup=${security_group}' -var='aws_region=${aws_region}' -var='count_var=${instances_to_add}' -var='serviceName=${service}' -var='serviceVersion=${serviceVersion}'"
+                        }
                          else if ( aws_currentCount > required_ins_count ) {
-                                // remove instances
-                              def running_instances_list = sh script: "aws ec2 describe-instances --query 'Reservations[*].Instances[*].[InstanceId]' --region ${aws_region} --filters Name=instance-state-name,Values=running --output text", returnStdout: true
+                              // remove instances
+                              def running_instances_list = sh script: "aws ec2 describe-instances --query 'Reservations[*].Instances[*].[InstanceId]' --region ${aws_region} --filters Name=${service},Values=running --output text", returnStdout: true
                               echo "Lets reduce instances" 
                               def running_ins_ids = []
                               running_ins_ids = running_instances_list.split('\n')
-
-
-                               echo (" instances_arr : ${running_ins_ids}")
-                                        
+                              echo (" instances_arr : ${running_ins_ids}")
                                
-                               for ( i = aws_currentCount-1 ; i >= required_ins_count ; i--) {
+							   for ( i = aws_currentCount-1 ; i >= required_ins_count ; i--) {
                                   echo ("i : ${i}")
                                   sh "aws ec2 terminate-instances --instance-ids ${running_ins_ids[i]}"
-                           }
-                            }
+                           	   }
+                        }
                          else {
                                 println("[INFO] Instnaces amount are aligned")
-                            }
+                        }
                         
                     
+                    }
                 }
             }
-         }
-      }     
+        }     
         stage ('Deploy Services') {
             steps {
                 script {
                     dir('infrastructure/ansible') {
-                        print("ansible")
-                       service = "intapi"
+                        service = "intapi"
 
-                         //   sh "echo [${service}] > hosts"
                             configVersion = releaseFile["release"]["services"]["${service}"]["configuration"]
                             dir('Configuration') {
                                checkout([$class: 'GitSCM', branches: [[name: "*/${configVersion}"]], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'git_rd_cred', url: 'https://github.com/roz-Devops/Configuration.git']]])
   
-                              //  sh "git checkout ${configVersion}"
                             }
                            println "after config"
                            sh 'pwd'
                               sh "mkdir -p ./roles/${service}/files/"
                               sh 'ls'
                               sh 'pwd'
-                          //     sh "chmod -R 777 /${service}/"
-                            //    sh 'ls'
-                             //   sh 'pwd'
                             sh "cp ./Configuration/${service}/*.* ./roles/${service}/files/"
-                            sh "cp /var/jenkins_home/${service_int_api}_${serviceVersion}.tar ./roles/${service}/files/"
-
-                            
-                             sh 'ls'
-                                sh 'pwd'
-                       sh "sed -i 's/REGION/${aws_region}/g' inventory.aws_ec2.yml"
-                           sh "ansible-playbook -i inventory.aws_ec2.yml main.yml --extra-vars 'service=${service}' -e 'service_version=${serviceVersion}'"
+                            sh "cp /var/jenkins_home/${service}_${serviceVersion}.tar ./roles/${service}/files/"
+                            sh "sed -i 's/REGION/${aws_region}/g' inventory.aws_ec2.yml"
+                            sh "ansible-playbook -i inventory.aws_ec2.yml main.yml --extra-vars 'service=${service}' -e 'service_version=${serviceVersion}'"
                            
                         }
                     }
@@ -175,7 +144,7 @@ pipeline {
                  //   automationVersion = releaseFile["release"]["automation"]     
                   //  sh "git checkout ${automationVersion}"
                    
-                    //    for ( service in service_int_api ) {
+                    //    for ( service in service ) {
                       //       serverAddresses = releaseFile["release"]["services"]["${service}"]["servers"]   
                        //    for ( address in serverAddresses )  {   
                         //   sh "./sanity_tests.sh ${service} ${address}" }
