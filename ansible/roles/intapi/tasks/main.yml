@@ -3,11 +3,11 @@
     hosts: "Service_{{ service }}"
   
   pre_tasks:
-     - raw: sudo apt-get -y install python-minimal
-       register: py_minimal_output
-     - raw: sudo apt-get update
-       register: system_output
-     - setup:
+    - raw: sudo apt-get -y install python-minimal
+      register: py_minimal_output
+    - raw: sudo apt-get update
+      register: system_output
+    - setup:
    
   tasks:  
   - name: Copy Configuration file
