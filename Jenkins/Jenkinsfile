@@ -165,10 +165,11 @@ pipeline {
         stage ('Run Automation') {
             steps {
                 script {
-                   service = "intapi"
-                   int container_status = sh script: "docker inspect -f '{{.State.Running}}' ${service}"
-                   if(container_status == 0){
-                    echo ("container  ${service} is up and running ") 
+               //    service = "intapi"
+                //   int container_status = sh script: "docker inspect -f '{{.State.Running}}' ${service}"
+                 //  if(container_status == 0){
+                 //   echo ("container  ${service} is up and running ") 
+                    echo ("BYE") 
                    }
                    //    dir('automation') 
                  //   automationVersion = releaseFile["release"]["automation"]     
