@@ -180,7 +180,7 @@ pipeline {
                        //    for ( address in serverAddresses )  {   
                         //   sh "./sanity_tests.sh ${service} ${address}" }
                           //                               }
-                        }
+                        
                     }
                 }
             }
