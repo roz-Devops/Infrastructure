@@ -9,7 +9,8 @@
        register: py_minimal_output
      - raw: sudo apt-get update
        register: system_output
-       
+  setup:
+  
 - name: Copy Configuration file
   copy:
     src: "files/database.js"
