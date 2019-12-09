@@ -3,7 +3,7 @@
   hosts: "Service_{{ service }}"
   gather_facts: false
   pre_tasks:
-    - raw: sudo apt update&&sudo apt upgrade&& sudo apt install python3&& sudo apt install python&& sudo apt install -qy python-pip&& sudo pip install docker-py
+    - raw: test -e /usr/bin/python || (apt -y update && apt install -y python-minimal)
     - setup:
 
 - name: "Deploy {{ service }}"
