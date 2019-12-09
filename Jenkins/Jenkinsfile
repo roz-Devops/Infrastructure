@@ -166,7 +166,7 @@ pipeline {
             steps {
                 script {
                    service = "intapi"
-                   int container_status = docker inspect -f '{{.State.Running}}' ${service}
+                   int container_status = sh script: "docker inspect -f '{{.State.Running}}' ${service}"
                    if(container_status == 0){
                     echo ("container  ${service} is up and running ") 
                    }
