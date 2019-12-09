@@ -10,33 +10,34 @@
      - raw: sudo apt-get update
        register: system_output
      - setup:
-  
-- name: Copy Configuration file
-  copy:
-    src: "files/database.js"
-    dest: "/opt/{{ service }}/config"    
+   
+  tasks:  
+  - name: Copy Configuration file
+    copy:
+      src: "files/database.js"
+      dest: "/opt/{{ service }}/config"    
 
-- name: Start Container
-  docker_container:
-    name: "{{ service }}"
-    image: "rozdockerforever/dev:{{ service }}_{{ service_version }}"
-    pull: true
-    recreate: yes
-    ports:
-      - "3000:3000"
-    volumes:
-      - "/opt/{{ service }}/config:/usr/src/app/config"
-    restart_policy:
-      unless-stopped
-    interactive:
-      no
-    state:
-      started
+  - name: Start Container
+    docker_container:
+      name: "{{ service }}"
+      image: "rozdockerforever/dev:{{ service }}_{{ service_version }}"
+      pull: true
+      recreate: yes
+      ports:
+        - "3000:3000"
+      volumes:
+        - "/opt/{{ service }}/config:/usr/src/app/config"
+      restart_policy:
+        unless-stopped
+      interactive:
+        no
+      state:
+        started
       
-- name: Get infos on container
-  docker_container_info:
-    name: "{{ service }}"
-  register: result
+  - name: Get infos on container
+    docker_container_info:
+     name: "{{ service }}"
+     register: result
 
 - name: Does container exist?
   debug:
