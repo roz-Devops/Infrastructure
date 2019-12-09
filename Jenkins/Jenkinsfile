@@ -90,8 +90,7 @@ pipeline {
                               def running_ins_ids = []
                               running_ins_ids = running_instances_list.split('\n')
                               echo (" instances_arr : ${running_ins_ids}")
-                               
-							   for ( i = aws_currentCount-1 ; i >= required_ins_count ; i--) {
+                               for ( i = aws_currentCount-1 ; i >= required_ins_count ; i--) {
                                   echo ("i : ${i}")
                                   sh "aws ec2 terminate-instances --instance-ids ${running_ins_ids[i]}"
                            	   }
@@ -117,12 +116,8 @@ pipeline {
   
                             }
                            println "after config"
-                           sh 'pwd'
-                              sh "mkdir -p ./roles/${service}/files/"
-                              sh 'ls'
-                              sh 'pwd'
+                            sh "mkdir -p ./roles/${service}/files/"
                             sh "cp ./Configuration/${service}/*.* ./roles/${service}/files/"
-                            sh "cp /var/jenkins_home/${service}_${serviceVersion}.tar ./roles/${service}/files/"
                             sh "sed -i 's/REGION/${aws_region}/g' inventory.aws_ec2.yml"
                             sh "ansible-playbook -i inventory.aws_ec2.yml main.yml --extra-vars 'service=${service}' -e 'service_version=${serviceVersion}'"
                            
