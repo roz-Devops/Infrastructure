@@ -19,6 +19,7 @@
         "subnet_id": "subnet-03cf8740d86e104b5",
         "associate_public_ip_address": true,
         "tags": {
+            "name": "lololo",
             "purpose": "golden.image"
         },
         "source_ami_filter": {
@@ -37,7 +38,8 @@
             "delete_on_termination": "true",
             "volume_size": 8,
             "volume_type": "standard"
-        }]
+        }],
+        "run_tags": { "Name": "Packer_Builder" }
     }],
     "provisioners": [{
         "type": "shell-local",
