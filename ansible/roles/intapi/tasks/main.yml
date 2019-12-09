@@ -3,15 +3,7 @@
   copy:
     src: "files/database.js"
     dest: "/opt/{{ service }}/config"    
-#- name: Execute the command in remote shell; stdout goes to the specified file on the remote.
- # shell: docker build -t "{{ service }}:{{ service_version }}" ./roles/"{{service}}/{{ service }}_{{ service_version }}".tar
-# - name: Build image
-#   docker_image:
-#     name: "{{ service }}_{{ service_version }}"
-#     state: present
-#     path: "/opt/{{ service }}/config"
-#- name: loading image.tar.
-#  shell: docker load --input /var/jenkins_home/intapi_1.0.0.tar
+
 - name: Start Container
   docker_container:
     name: "{{ service }}"
@@ -28,3 +20,18 @@
       no
     state:
       started
+      
+- name: checking-running Container
+  shell: docker inspect -f '{{.State.Running}}' {{service}}
+  register: docker_log
+
+- debug:
+    var: docker_log.stdout
+
+- set_fact:
+        stop_enabled: true
+  when: "true == docker_log.stdout"
+
+- fail:
+    msg: "FAIL ,The Conteiner is NOT running"
+  when: " false == docker_log.stdout"
