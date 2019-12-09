@@ -71,7 +71,7 @@ pipeline {
             steps {
                 script {
                     dir ('infrastructure/terraform') {
-                        int aws_currentCount = sh script: "aws ec2 describe-instances --query 'Reservations[*].Instances[*].[InstanceId]' --region ${aws_region} --filters 'Name=instance-state-name,Values=running' 'Name=tag-key,Values=Service' 'Name=tag-value,Values=intapi' --output text | wc -l" , returnStdout: true
+                        int aws_currentCount = sh script: "aws ec2 describe-instances --query 'Reservations[*].Instances[*].[InstanceId]' --region ${aws_region} --filters 'Name=instance-state-name,Values=running' 'Name=tag-key,Values=Service' 'Name=tag-value,Values=${service}' --output text | wc -l" , returnStdout: true
    
                         int required_ins_count = releaseFile["release"]["services"]["${service}"]['instance_count']
                             echo (" aws_currentCount : ${aws_currentCount}")
@@ -85,7 +85,7 @@ pipeline {
                         }
                          else if ( aws_currentCount > required_ins_count ) {
                               // remove instances
-                              def running_instances_list = sh script: "aws ec2 describe-instances --query 'Reservations[*].Instances[*].[InstanceId]' --region ${aws_region} --filters 'Name=instance-state-name,Values=running' 'Name=tag-key,Values=Service' 'Name=tag-value,Values=intapi' --output text", returnStdout: true
+                              def running_instances_list = sh script: "aws ec2 describe-instances --query 'Reservations[*].Instances[*].[InstanceId]' --region ${aws_region} --filters 'Name=instance-state-name,Values=running' 'Name=tag-key,Values=Service' 'Name=tag-value,Values=${service}' --output text", returnStdout: true
                               echo "Lets reduce instances" 
                               def running_ins_ids = []
                               running_ins_ids = running_instances_list.split('\n')
