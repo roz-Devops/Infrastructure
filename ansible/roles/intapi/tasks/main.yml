@@ -1,5 +1,5 @@
 ---
-  hosts: "Service_{{ service }}"
+- hosts: "Service_{{ service }}"
   gather_facts: false
   
   pre_tasks:
