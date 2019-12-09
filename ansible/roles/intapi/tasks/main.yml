@@ -1,6 +1,5 @@
 ---
-- hosts: "Service_{{ service }}"
-  pre_tasks:
+- pre_tasks:
     - raw: sudo apt-get -y install python-minimal
       register: py_minimal_output
     - raw: sudo apt-get update
