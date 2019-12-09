@@ -1,5 +1,5 @@
 ---
-- gather_facts: no
+- gather_facts: false
   hosts: "Service_{{ service }}"
   
   pre_tasks:
