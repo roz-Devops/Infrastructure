@@ -26,17 +26,17 @@
      name: "{{ service }}"
      register: result
      
-- name: Save Docker Log Into Register
-  shell: docker inspect {{ service }}
-  register: docker_inspect
+  - name: Save Docker Log Into Register
+    shell: docker inspect {{ service }}
+    register: docker_inspect
 
-- debug:
+  - debug:
     var: docker_inspect.stdout
 
-- set_fact:
+  - set_fact:
         stop_enabled: true
-  when: "docker_inspect['State']['Status'].stdout == 'running'"
+    when: "docker_inspect['State']['Status'].stdout == 'running'"
 
-- fail:
+  - fail:
     msg: "The Conteiner Log Not Equal To Check String."
-  when: "docker_inspect['State']['Status'].stdout != 'running'"
+    when: "docker_inspect['State']['Status'].stdout != 'running'"
