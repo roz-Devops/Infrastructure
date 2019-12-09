@@ -5,9 +5,8 @@
   pre_tasks:
     - raw: sudo apt update&&sudo apt -qy update&& sudo apt install -qy python&& sudo apt install -qy python-pip&& sudo pip install docker-py
     - setup:
-
+    
 - name: "Deploy {{ service }}"
-  hosts: "Service_{{ service }}"
   roles:
   - { role: roles/common, "service={{ service }}","service_version={{service_version}}", become: true }
   - { role: "roles/{{ service }}", "service={{ service }}", "service_version={{service_version}}", become: true }
