@@ -22,16 +22,17 @@
       started
       
 - name: checking-running Container
+docker inspect --format={{ '{{.State.Running}}' }} {{service}}
   shell: docker inspect -f "{{.State.Running}}" "{{service}}"
-  register: docker_log
+  register: status
 
 - debug:
-    var: docker_log.stdout
+    var: status.stdout
 
 - set_fact:
         stop_enabled: true
-  when: "true == docker_log.stdout"
+  when: "true" == status.stdout
 
 - fail:
     msg: "FAIL ,The Conteiner is NOT running"
-  when: " false == docker_log.stdout"
+  when: "false" == status.stdout
