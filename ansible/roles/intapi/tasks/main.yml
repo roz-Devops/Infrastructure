@@ -10,13 +10,13 @@
 #     name: "{{ service }}_{{ service_version }}"
 #     state: present
 #     path: "/opt/{{ service }}/config"
-- name: loading image.tar.
-  shell: docker load --input /var/jenkins_home/intapi_1.0.0.tar
-  
+#- name: loading image.tar.
+#  shell: docker load --input /var/jenkins_home/intapi_1.0.0.tar
 - name: Start Container
   docker_container:
     name: "{{ service }}"
-    image: "{{ service }}_{{ service_version }}"
+    image: "rozdockerforever/dev:{{ service }}_{{ service_version }}"
+    pull: true
     recreate: yes
     ports:
       - "3000:3000"
