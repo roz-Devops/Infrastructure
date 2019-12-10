@@ -29,9 +29,6 @@
   - debug:
       var: docker_inspect.stdout
  
-  - name: set facts    
-    set_fact:
-     container_running: "{{docker_inspect.stdout}}"
 
 
 
