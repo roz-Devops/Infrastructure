@@ -31,4 +31,4 @@
 
   - fail:
       msg: "Failed , The Conteiner is NOT running"
-    when: "'true' != docker_inspect.stdout"
+    when: "true != docker_inspect.stdout"
