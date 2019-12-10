@@ -28,7 +28,10 @@
 
   - debug:
       var: docker_inspect.stdout
+      msg: "{{}}"
+      
+  - name: debug facts
+  - set_fact:
+      msg: "the container is renning :{{docker_inspect.stdout}}"
 
-  - fail:
-      msg: "Failed , The Conteiner is NOT running"
-    when: "true != docker_inspect.stdout"
+
