@@ -21,14 +21,18 @@
       state:
         started
       
-  #- name: Get infos on container
-   # docker_container_info:
-    #  name: "{{ service }}"
-     # register: result
-     
+      
   - name: Save Docker Log Into Register
     shell: docker inspect --format={{ '{{.State.Running}}' }} {{ service }}
     register: docker_inspect
 
   - debug:
       var: docker_inspect.stdout
+   
+  - set_fact:
+        stop_enabled: true
+  when: "'true' == docker_inspect.stdout"
+
+  - fail:
+      msg: "Failed , The Conteiner is NOT running"
+    when: "'true' != docker_inspect.stdout"
