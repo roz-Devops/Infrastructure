@@ -1,4 +1,6 @@
 ---
+- become: yes
+ 
 - name: Create Directory structure
   file:
     path: "{{ item }}"
