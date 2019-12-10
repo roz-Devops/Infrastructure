@@ -28,10 +28,6 @@
 
   - debug:
       var: docker_inspect.stdout
-   
-  - set_fact:
-          stop_enabled: true
-     when: "'true' == docker_inspect.stdout"
 
   - fail:
       msg: "Failed , The Conteiner is NOT running"
