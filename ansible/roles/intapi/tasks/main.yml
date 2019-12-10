@@ -25,6 +25,9 @@
   - name: Save Docker Log Into Register
     shell: docker inspect --format={{ '{{.State.Running}}' }} {{ service }}
     register: docker_inspect
+    
+  - debug:
+    var: docker_inspect.stdout
  
   - name: set facts    
     set_fact:
@@ -33,7 +36,7 @@
   - name: debug facts
     debug:   
           msg: the container {{ service }} is running {{container_running}}
-    when: '"true" in {{container_running}}'
+    when: '"true" == {{container_running}}'
 
 
 
