@@ -31,8 +31,8 @@
    
   - set_fact:
           stop_enabled: true
-     when: "'true' == docker_inspect.stdout"
+     when: "true == docker_inspect.stdout"
 
   - fail:
       msg: "Failed , The Conteiner is NOT running"
-    when: "'true' != docker_inspect.stdout"
+    when: "true != docker_inspect.stdout"
