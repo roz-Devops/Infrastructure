@@ -31,7 +31,7 @@
       msg: "{{}}"
       
   - name: debug facts
-  - set_fact:
+    set_fact:
       msg: "the container is renning :{{docker_inspect.stdout}}"
 
 
