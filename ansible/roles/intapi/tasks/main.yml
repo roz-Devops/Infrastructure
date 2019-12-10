@@ -27,12 +27,12 @@
     register: docker_inspect
       
     set_fact:
-     container_running: {{docker_inspect.stdout}}
+     container_running: "{{docker_inspect.stdout}}"
   
   - name: debug facts
     debug:   
-      msg: the container {{ service }} is running {{docker_inspect.stdout}}
-      when: " 'false' in {{docker_inspect.stdout}}"
+      msg: the container {{ service }} is running {{container_running}}
+      when: ' "true" in {{container_running}}'
 
 
 
