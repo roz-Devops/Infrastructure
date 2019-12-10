@@ -31,6 +31,7 @@
       
   - name: debug facts
     set_fact:
+          stop_enabled: true
      msg: the container {{ service }} is running {{docker_inspect.stdout}}
      when: " 'false' in {{docker_inspect.stdout}}"
 
