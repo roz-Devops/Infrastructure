@@ -32,7 +32,7 @@
   - name: debug facts
     set_fact:
       msg: "the container {{ service }} is running {{docker_inspect.stdout}}"
-     when: "'true' in docker_inspect.stdout"
+     when: " true in docker_inspect.stdout"
 
 
 
