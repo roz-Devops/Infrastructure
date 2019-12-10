@@ -25,15 +25,14 @@
   - name: Save Docker Log Into Register
     shell: docker inspect --format={{ '{{.State.Running}}' }} {{ service }}
     register: docker_inspect
-
-  - debug:
-      var: docker_inspect.stdout
       
-  - name: debug facts
     set_fact:
-          stop_enabled: true
-     msg: the container {{ service }} is running {{docker_inspect.stdout}}
-     when: " 'false' in {{docker_inspect.stdout}}"
+     container_running: {{docker_inspect.stdout}}
+  
+  - name: debug facts
+    debug:   
+      msg: the container {{ service }} is running {{docker_inspect.stdout}}
+      when: " 'false' in {{docker_inspect.stdout}}"
 
 
 
