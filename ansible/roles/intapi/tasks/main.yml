@@ -25,7 +25,8 @@
   - name: Save Docker Log Into Register
     shell: docker inspect --format={{ '{{.State.Running}}' }} {{ service }}
     register: docker_inspect
-      
+ 
+  - name: set facts    
     set_fact:
      container_running: "{{docker_inspect.stdout}}"
   
