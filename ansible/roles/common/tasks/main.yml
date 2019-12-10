@@ -18,3 +18,5 @@
   become: yes
   shell: sudo apt -qy update&& sudo apt install -qy python3&& sudo apt install -qy python&& sudo apt install -qy python-pip&& sudo pip install docker-py
     
+- name: "error lock"
+  shell: sudo apt update 2>/dev/null | grep packages | cut -d '.' -f 1
