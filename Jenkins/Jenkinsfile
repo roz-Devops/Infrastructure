@@ -56,13 +56,13 @@ pipeline {
                         serviceVersion = releaseFile["release"]["services"]["${service}"]["version"]
                         echo (" service version is : ${serviceVersion}")
                         echo (" service service is : ${service}")
-                        sh "ls /var/jenkins_home/${service}_${serviceVersion}.tar"
-                        if( fileExists ("/var/jenkins_home/${service}_${serviceVersion}.tar")){
-                            println("Artifact is exists : ${service}_${serviceVersion}.tar")
-                        }
-                	     else {    println("Artifact not exists ${service}_${serviceVersion}.tar")
-                           	       currentBuild.result = 'FAILURE'
-                        }
+                        // sh "ls /var/jenkins_home/${service}_${serviceVersion}.tar"
+                        // if( fileExists ("/var/jenkins_home/${service}_${serviceVersion}.tar")){
+                        //     println("Artifact is exists : ${service}_${serviceVersion}.tar")
+                        // }
+                	    //  else {    println("Artifact not exists ${service}_${serviceVersion}.tar")
+                        //    	       currentBuild.result = 'FAILURE'
+                        // }
                     
                }
            }
@@ -80,7 +80,6 @@ pipeline {
                          if ( aws_currentCount < required_ins_count ) {
                                sh "terraform init"  
                                echo (" instances_to_add : ${instances_to_add}")
-                               //     sh "terraform validate"
                                sh "terraform apply -auto-approve -var='envName=${envName}' -var='aws_vpc_id=${aws_vpc}' -var='securitygroup=${security_group}' -var='aws_region=${aws_region}' -var='count_var=${instances_to_add}' -var='serviceName=${service}' -var='serviceVersion=${serviceVersion}'"
                         }
                          else if ( aws_currentCount > required_ins_count ) {
