@@ -19,6 +19,6 @@
 
 - name: "installing pcks"
   become: true
-  shell: sudo apt-get install -qy python&& sudo apt-get install -qy python3&& sudo apt-get install -qy python-pip
+  shell: sudo apt-get install -qy python&& sudo apt-get install -qy python3&& sudo apt-get install -qy python-pip&& sudo apt-get pip install docker
   
   
