@@ -3,23 +3,18 @@
     copy:
       src: "files/database.js"
       dest: "/opt/{{ service }}/config"    
+        
+  - name: Pull image from dockerhub
+    shell: docker pull "rozdockerforever/dev:{{ service }}_{{ service_version }}"
 
-  - name: Start Container
-    docker_container:
-      name: "{{ service }}"
-      image: "rozdockerforever/dev:{{ service }}_{{ service_version }}"
-      pull: true
-      recreate: yes
-      ports:
-        - "3000:3000"
-      volumes:
-        - "/opt/{{ service }}/config:/usr/src/app/config"
-      restart_policy:
-        unless-stopped
-      interactive:
-        no
-      state:
-        started
+  - name: Tag dockerhub image 
+    shell: docker tag "rozdockerforever/dev:{{ service }}_{{ service_version }}" "{{ service }}_{{ service_version }}"
+     
+  - name: Run container from my image
+    shell: docker run --name "{{ service }}" "{{ service }}_{{ service_version }}" 
+     
+  - debug: 
+     msg: "INTAPI"
       
       
   - name: Save Docker Log Into Register
