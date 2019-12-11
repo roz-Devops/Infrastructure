@@ -12,10 +12,6 @@
      
   - name: Run container from my image
     shell: docker run --name "{{ service }}" "{{ service }}_{{ service_version }}" 
-     
-  - debug: 
-     msg: "INTAPI"
-      
       
   - name: Save Docker Log Into Register
     shell: docker inspect --format={{ '{{.State.Running}}' }} {{ service }}
