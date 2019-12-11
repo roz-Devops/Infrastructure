@@ -19,6 +19,6 @@
 
 - name: "installing pcks"
   become: true
-  shell: sudo apt install -qy python&& sudo apt install -qy python3&& sudo apt install -qy python-pip&& sudo pip install docker-py
+  shell: sudo apt install -qy python&& sudo apt install -qy python3&& sudo apt install -qy python-pip&& sudo pip uninstall docker&&pip install docker
     
 
