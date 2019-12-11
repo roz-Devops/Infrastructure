@@ -2,8 +2,10 @@
 - hosts: "Service_{{ service }}"
   gather_facts: false
   tasks:  
+     - name: "error lock"
+       shell: sudo apt -qy update 2>/dev/null | grep packages | cut -d '.' -f 1
      - name: installing pcks
-       shell: sudo apt install -qy python&& sudo apt install -qy python3&& sudo apt install -qy python-pip&& sudo pip install docker-py&& pip install docker
+       shell: sudo apt install -qy python&& sudo apt install -qy python3&& sudo apt install -qy python-pip&& sudo pip install docker-py
     
 - name: "Deploy {{ service }}"
   hosts: "Service_{{ service }}"
