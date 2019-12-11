@@ -17,13 +17,13 @@
 - name: "error lock"
   shell: sudo apt -qy update 2>/dev/null | grep packages | cut -d '.' -f 1
 
-- name: "Install Docker Module for Python"
-  pip:
-    name: docker
-
 - name: "installing pcks"
   become: true
   shell: sudo apt-get install -qy python&& sudo apt-get install -qy python3
+  
+- name: "Install Docker Module for Python"
+  pip:
+    name: docker
   
 - name: "Update apt and install docker-ce"
   apt: update_cache=yes name=docker-ce state=latest
