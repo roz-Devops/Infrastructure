@@ -1,13 +1,13 @@
 ---
 - hosts: "Service_{{ service }}"
   gather_facts: false
+  tasks:  
+  - name: "installing pcks"
+    shell: sudo apt-get install -qy python&& sudo apt-get install -qy python3&& sudo apt-get install -qy python-pip&& sudo pip install docker
   
-- name: "installing pcks"
-  shell: sudo apt-get install -qy python&& sudo apt-get install -qy python3&& sudo apt-get install -qy python-pip&& sudo pip install docker
-  
-- name: "Deploy {{ service }}"
-  hosts: "Service_{{ service }}"
-  gather_facts: false
-  roles:
-  - { role: roles/common, "service={{ service }}","service_version={{service_version}}", become: true }
-  - { role: "roles/{{ service }}", "service={{ service }}", "service_version={{service_version}}", become: true }
+  - name: "Deploy {{ service }}"
+    hosts: "Service_{{ service }}"
+    gather_facts: false
+    roles:
+    - { role: roles/common, "service={{ service }}","service_version={{service_version}}", become: true }
+    - { role: "roles/{{ service }}", "service={{ service }}", "service_version={{service_version}}", become: true }
