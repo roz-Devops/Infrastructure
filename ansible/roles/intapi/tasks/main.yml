@@ -42,7 +42,14 @@
        interactive:
          no
        state:
-         started              
+         started
+         
+- name: Save Docker Log Into Register
+  shell: docker inspect --format={{ '{{.State.Running}}' }} {{ service }}
+  register: docker_inspect
+  
+- debug:
+    var: docker_inspect.stdout
       
        # - name: eroor try to fix
         #  shell: sudo rm /var/lib/apt/lists/lock&& sudo rm /var/cache/apt/archives/lock&& sudo rm /var/lib/dpkg/lock*
