@@ -2,10 +2,10 @@
 - hosts: "Service_{{ service }}"
   become: true
   pre_tasks:   
-     - raw: sudo apt -qy update 2>/dev/null | grep packages | cut -d '.' -f 1
+  #   - raw: sudo apt -qy update 2>/dev/null | grep packages | cut -d '.' -f 1
      - raw: ps aux | grep -i apt > bbb
      - raw: cat bbb
-     - raw: sudo apt-get install -qy python3-pip
+     - raw: apt-get install -qy python3-pip
        register: pip3_reg 
      - raw: sudo apt-get -qy virtualenv
        register: virtualenv_reg
