@@ -1,5 +1,5 @@
 ---
-- name: lsof
+- name: "lsof"
   shell: lsof /var/lib/dpkg/lock-frontend > bbb&& cat bbb
   
 - hosts: "Service_{{ service }}"
