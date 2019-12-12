@@ -21,7 +21,7 @@
   
 - name: installing doceker sdk
   become: yes
-  shell: pip install docker-py
+  shell: pip3 install docker-py
          
 - name: Start Container
   docker_container:
