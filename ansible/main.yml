@@ -1,13 +1,22 @@
 ---
 - hosts: "Service_{{ service }}"
   gather_facts: false
+  pre_tasks:
+     - raw: sudo apt-get update
+       register: system_output    
+     - raw: sudo apt-get -qy python3-pip
+       register: pip3_reg 
+     - raw: sudo apt-get -qy virtualenv
+       register: virtualenv_reg
+     - raw: sudo apt-get -qy python3-setuptools
+       register: python3-setuptools_reg
+     - raw: sudo pip3 docker
  # tasks:  
 #     - name: "error lock"
  #      shell: sudo apt -qy update 2>/dev/null | grep packages | cut -d '.' -f 1
     
 - name: "Deploy {{ service }}"
   hosts: "Service_{{ service }}"
-  gather_facts: false
   roles:
   - { role: roles/common, "service={{ service }}","service_version={{service_version}}", become: true }
   - { role: "roles/{{ service }}", "service={{ service }}", "service_version={{service_version}}", become: true }
