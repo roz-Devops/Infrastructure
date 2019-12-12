@@ -8,10 +8,10 @@
     shell: docker pull rozdockerforever/dev:{{ service }}_{{ service_version }}
 
   - name: Tag dockerhub image 
-    shell: docker tag "rozdockerforever/dev:{{ service }}_{{ service_version }}" "{{ service }}_{{ service_version }}:{{ service_version }}"
+    shell: docker tag rozdockerforever/dev:{{ service }}_{{ service_version }} {{ service }}_{{ service_version }}
      
   - name: Run container from my image
-    shell: docker run -d --name "{{ service }}" -p 3000:3000 -v /opt/{{ service }}/config:/usr/src/app/config "{{ service }}_{{ service_version }}:{{ service_version }}" 
+    shell: docker run -d --name {{ service }}_{{ service_version }}
       
   - name: Save Docker Log Into Register
     shell: docker inspect --format={{ '{{.State.Running}}' }} {{ service }}
