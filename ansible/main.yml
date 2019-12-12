@@ -1,25 +1,14 @@
 ---
-- name: "lsof"
-  shell: lsof /var/lib/dpkg/lock-frontend > bbb&& cat bbb
-  
-- hosts: "Service_{{ service }}"
-  become: true
-  pre_tasks:   
-  #   - raw: sudo apt -qy update 2>/dev/null | grep packages | cut -d '.' -f 1
-     - raw: lsof /var/lib/dpkg/lock-frontend 
-     - raw: sudo rm /var/lib/dpkg/lock-frontend
-     - raw: sudo dpkg --configure -a
-     - raw: apt-get install -qy python3-pip
-       register: pip3_reg 
-     - raw: sudo apt-get -qy virtualenv
-       register: virtualenv_reg
-     - raw: sudo apt-get -qy python3-setuptools
-       register: python3-setuptools_reg
-     - raw: sudo pip3 docker
- # tasks: 
-    
-- name: "Deploy {{ service }}"
+- name: Pre Tasks
   hosts: "Service_{{ service }}"
+  gather_facts: false
+  pre_tasks:
+    #- local_action: wait_for port=22 host={% if ansible_ssh_host is defined %}{{ ansible_ssh_host }}{% else %}{{ inventory_hostname }}{% endif %}
+    - setup:
+
+- name: "Deploy {{ service }}"
+  hosts:  "Service_{{ service }}"
+  gather_facts: false
   roles:
-  - { role: roles/common, "service={{ service }}","service_version={{service_version}}", become: true }
-  - { role: "roles/{{ service }}", "service={{ service }}", "service_version={{service_version}}", become: true }
+  - { role: roles/common, "service={{ service }}", become: true }
+  - { role: "roles/{{ service }}", "service=meme", become: true }
