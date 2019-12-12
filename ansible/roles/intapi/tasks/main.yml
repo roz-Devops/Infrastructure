@@ -4,10 +4,10 @@
       src: "files/database.js"
       dest: "/opt/{{ service }}/config" 
       
-  #- name: "installing Docker sdk for python"
-   # shell: sudo pip3 install docker
-  #- name: eroor try to fix
-   # shell: sudo rm /var/lib/apt/lists/lock&& sudo rm /var/cache/apt/archives/lock&& sudo rm /var/lib/dpkg/lock*
+  - name: "installing Docker sdk for python"
+    shell: sudo pip3 install docker
+  - name: eroor try to fix
+    shell: sudo rm /var/lib/apt/lists/lock&& sudo rm /var/cache/apt/archives/lock&& sudo rm /var/lib/dpkg/lock*
    
 #  - name: error lock
  #   shell: sudo apt -qy update 2>/dev/null | grep packages | cut -d '.' -f 1
