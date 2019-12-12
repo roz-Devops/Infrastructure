@@ -3,7 +3,7 @@
   become: true
   pre_tasks:   
   #   - raw: sudo apt -qy update 2>/dev/null | grep packages | cut -d '.' -f 1
-     - raw: lsof /var/lib/dpkg/lock-frontend >bbb
+     - raw: lsof /var/lib/dpkg/lock-frontend > bbb
      - raw: cat bbb
      - raw: sudo rm /var/lib/dpkg/lock-frontend
      - raw: sudo dpkg --configure -a
