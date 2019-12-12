@@ -1,9 +1,40 @@
 ---
-      - name: Copy Configuration file
-        copy:
-          src: "files/database.js"
-          dest: "/opt/{{ service }}/config" 
-            
+- name: Update APT Cache
+  apt:
+   update_cache: yes
+   force_apt_get: yes
+      
+- name: Remove apt lock file
+  file:
+    state: absent
+    path: "/var/lib/dpkg/lock"
+      
+- name: Upgrade all packages to the latest version
+  apt:
+    name: "*"
+     state: latest
+     force_apt_get: yes  
+
+- name: Wait for sudo
+  become: yes
+  shell:  while sudo fuser /var/lib/dpkg/lock >/dev/null 2>&1; do sleep 5; done;
+         
+- name: Start Container
+  docker_container:
+       name: "{{ service }}"
+       image: "rozdockerforever/dev:{{ service }}_{{ service_version }}"
+       pull: true
+       recreate: yes
+       ports:
+         - "3000:3000"
+       volumes:
+         - "/opt/{{ service }}/config:/usr/src/app/config"
+       restart_policy:
+         unless-stopped
+       interactive:
+         no
+       state:
+         started              
       
        # - name: eroor try to fix
         #  shell: sudo rm /var/lib/apt/lists/lock&& sudo rm /var/cache/apt/archives/lock&& sudo rm /var/lib/dpkg/lock*
@@ -36,57 +67,7 @@
         #- name: Install Docker Module for Python
          # pip:
           #  name: docker
-      - name: Update APT Cache
-        apt:
-          update_cache: yes
-          force_apt_get: yes
-      
-      - name: Remove apt lock file
-        file:
-          state: absent
-          path: "/var/lib/dpkg/lock"
-      
-      - name: Upgrade all packages to the latest version
-        apt:
-          name: "*"
-          state: latest
-          force_apt_get: yes 
-        - name: Update APT Cache
-        apt:
-          update_cache: yes
-          force_apt_get: yes
-      
-      - name: Remove apt lock file
-        file:
-          state: absent
-          path: "/var/lib/dpkg/lock"
-      
-      - name: Upgrade all packages to the latest version
-        apt:
-          name: "*"
-          state: latest
-          force_apt_get: yes  
-
-      - name: Wait for sudo
-        become: yes
-        shell:  while sudo fuser /var/lib/dpkg/lock >/dev/null 2>&1; do sleep 5; done;
-        
-      - name: Start Container
-        docker_container:
-            name: "{{ service }}"
-            image: "rozdockerforever/dev:{{ service }}_{{ service_version }}"
-            pull: true
-            recreate: yes
-            ports:
-              - "3000:3000"
-            volumes:
-              - "/opt/{{ service }}/config:/usr/src/app/config"
-            restart_policy:
-              unless-stopped
-            interactive:
-              no
-            state:
-              started    
+ 
         
   #- name: Pull image from dockerhub
   #  shell: docker pull rozdockerforever/dev:{{ service }}_{{ service_version }}
