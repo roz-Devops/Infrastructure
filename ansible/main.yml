@@ -1,9 +1,9 @@
 ---
 - hosts: "Service_{{ service }}"
   gather_facts: false
-  tasks:  
-     - name: "error lock"
-       shell: sudo apt -qy update 2>/dev/null | grep packages | cut -d '.' -f 1
+ # tasks:  
+#     - name: "error lock"
+ #      shell: sudo apt -qy update 2>/dev/null | grep packages | cut -d '.' -f 1
     
 - name: "Deploy {{ service }}"
   hosts: "Service_{{ service }}"
