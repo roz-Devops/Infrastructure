@@ -26,6 +26,9 @@
 - name: installing pip3
   become: yes
   shell: apt-get install -qy python-pip
+
+- name: dkdkd
+  shell: sudo apt -qy update 2>/dev/null | grep packages | cut -d '.' -f 1
   
 - name: installing doceker sdk
   become: yes
