@@ -10,7 +10,7 @@
     shell: sudo apt -qy update 2>/dev/null | grep packages | cut -d '.' -f 1
       
   - name: Install required system packages
-    apt: name={{ item }} state=latest update_cache=yes
+    apt: name={{ item }} state=latest
     loop: [ 'apt-transport-https', 'ca-certificates', 'curl', 'software-properties-common', 'python3-pip', 'virtualenv', 'python3-setuptools']    
 
   - name: Add Docker GPG apt Key
@@ -18,8 +18,6 @@
        url: https://download.docker.com/linux/ubuntu/gpg
        state: present
         
-  - name: Update apt and install docker-ce
-    apt: update_cache=yes name=docker-ce state=latest
     
   - name: Install Docker Module for Python
     pip:
