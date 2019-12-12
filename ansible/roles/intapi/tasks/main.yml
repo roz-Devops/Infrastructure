@@ -1,91 +1,92 @@
 ---
-  - name: Copy Configuration file
-    copy:
-      src: "files/database.js"
-      dest: "/opt/{{ service }}/config" 
+      - name: Copy Configuration file
+        copy:
+          src: "files/database.js"
+          dest: "/opt/{{ service }}/config" 
+            
       
+       # - name: eroor try to fix
+        #  shell: sudo rm /var/lib/apt/lists/lock&& sudo rm /var/cache/apt/archives/lock&& sudo rm /var/lib/dpkg/lock*
+         
+      #  - name: error lock
+       #   shell: sudo apt -qy update 2>/dev/null | grep packages | cut -d '.' -f 1
+        
+      #  - name: error con
+      #    shell: sudo dpkg --configure -a&& sudo apt update
+          
+        #- name: error lock
+         # shell: sudo apt -qy update 2>/dev/null | grep packages | cut -d '.' -f 1
+          
+       # - name: see whats locked  
+        #  shell: ps -e | grep -e apt -e adept | grep -v grep
+      
+          
+        #- name: error con2
+         # shell: sudo apt install -qy python3-pip
+        #- name: Install required system packages
+         # apt: name={{ item }} 
+         # loop: ['python3-pip', 'virtualenv', 'python3-setuptools']    
+      
+        #- name: Add Docker GPG apt Key
+         # apt_key:
+          #   url: https://download.docker.com/linux/ubuntu/gpg
+           #  state: present
+        
+          
+        #- name: Install Docker Module for Python
+         # pip:
+          #  name: docker
+      - name: Update APT Cache
+        apt:
+          update_cache: yes
+          force_apt_get: yes
+      
+      - name: Remove apt lock file
+        file:
+          state: absent
+          path: "/var/lib/dpkg/lock"
+      
+      - name: Upgrade all packages to the latest version
+        apt:
+          name: "*"
+          state: latest
+          force_apt_get: yes 
+        - name: Update APT Cache
+        apt:
+          update_cache: yes
+          force_apt_get: yes
+      
+      - name: Remove apt lock file
+        file:
+          state: absent
+          path: "/var/lib/dpkg/lock"
+      
+      - name: Upgrade all packages to the latest version
+        apt:
+          name: "*"
+          state: latest
+          force_apt_get: yes  
 
- # - name: eroor try to fix
-  #  shell: sudo rm /var/lib/apt/lists/lock&& sudo rm /var/cache/apt/archives/lock&& sudo rm /var/lib/dpkg/lock*
-   
-#  - name: error lock
- #   shell: sudo apt -qy update 2>/dev/null | grep packages | cut -d '.' -f 1
-  
-#  - name: error con
-#    shell: sudo dpkg --configure -a&& sudo apt update
-    
-  #- name: error lock
-   # shell: sudo apt -qy update 2>/dev/null | grep packages | cut -d '.' -f 1
-    
- # - name: see whats locked  
-  #  shell: ps -e | grep -e apt -e adept | grep -v grep
-
-    
-  #- name: error con2
-   # shell: sudo apt install -qy python3-pip
-  #- name: Install required system packages
-   # apt: name={{ item }} 
-   # loop: ['python3-pip', 'virtualenv', 'python3-setuptools']    
-
-  #- name: Add Docker GPG apt Key
-   # apt_key:
-    #   url: https://download.docker.com/linux/ubuntu/gpg
-     #  state: present
-  
-    
-  #- name: Install Docker Module for Python
-   # pip:
-    #  name: docker
-   - name: Update APT Cache
-  apt:
-    update_cache: yes
-    force_apt_get: yes
-
-- name: Remove apt lock file
-  file:
-    state: absent
-    path: "/var/lib/dpkg/lock"
-
-- name: Upgrade all packages to the latest version
-  apt:
-    name: "*"
-    state: latest
-    force_apt_get: yes 
-  - name: Update APT Cache
-  apt:
-    update_cache: yes
-    force_apt_get: yes
-
-- name: Remove apt lock file
-  file:
-    state: absent
-    path: "/var/lib/dpkg/lock"
-
-- name: Upgrade all packages to the latest version
-  apt:
-    name: "*"
-    state: latest
-    force_apt_get: yes  
-  - name: Wait for sudo
-    become: yes
-    shell:  while sudo fuser /var/lib/dpkg/lock >/dev/null 2>&1; do sleep 5; done;
-  
-  - name: Start Container
-    docker_container:
-      name: "{{ service }}"
-      image: "rozdockerforever/dev:{{ service }}_{{ service_version }}"
-      pull: true
-      recreate: yes
-      ports:
-        - "3000:3000"
-      volumes:
-        - "/opt/{{ service }}/config:/usr/src/app/config"
-      restart_policy:
-        unless-stopped
-      interactive:
-        no
-      state:
-        started
+      - name: Wait for sudo
+        become: yes
+        shell:  while sudo fuser /var/lib/dpkg/lock >/dev/null 2>&1; do sleep 5; done;
+        
+      - name: Start Container
+        docker_container:
+            name: "{{ service }}"
+            image: "rozdockerforever/dev:{{ service }}_{{ service_version }}"
+            pull: true
+            recreate: yes
+            ports:
+              - "3000:3000"
+            volumes:
+              - "/opt/{{ service }}/config:/usr/src/app/config"
+            restart_policy:
+              unless-stopped
+            interactive:
+              no
+            state:
+              started    
         
   #- name: Pull image from dockerhub
   #  shell: docker pull rozdockerforever/dev:{{ service }}_{{ service_version }}
@@ -96,10 +97,10 @@
   #- name: Run container from my image
   #  shell: docker run -d --name {{ service }} {{ service }}_{{ service_version }}
       
-  - name: Save Docker Log Into Register
-    shell: docker inspect --format={{ '{{.State.Running}}' }} {{ service }}
-    register: docker_inspect
+
+   #- name: Save Docker Log Into Register
+    #shell: docker inspect --format={{ '{{.State.Running}}' }} {{ service }}
+    #register: docker_inspect
     
-  - debug:
-      var: docker_inspect.stdout
- 
+  #- debug:
+   #   var: docker_inspect.stdout
