@@ -12,7 +12,7 @@
 - name: Remove apt lock file2
   file:
     state: absent
-    path: "/var/lib/dpkg/lock*"
+    path: "/var/lib/dpkg/lock"
       
 #- name: Upgrade all packages to the latest version
  # apt:
@@ -28,12 +28,12 @@
 #  become: yes
  # shell: dpkg --configure -a
   
+- name: dkdkd
+  shell: sudo mv /var/lib/dpkg/lock /var/lib/dpkg/lock.bak
+  
 - name: installing pip3
   become: yes
   shell: apt-get install -qy python-pip
-
-- name: dkdkd
-  shell: sudo apt -qy update 2>/dev/null | grep packages | cut -d '.' -f 1
   
 - name: installing doceker sdk
   become: yes
