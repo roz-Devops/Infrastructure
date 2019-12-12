@@ -1,18 +1,17 @@
 ---
-  - name: Copy Configuration file
+-  gather_facts: no
+   remote_user: ubuntu
+   become: yes
+ 
+ - name: Copy Configuration file
     copy:
       src: "files/database.js"
       dest: "/opt/{{ service }}/config"   
       
-  - name: error lock
-    shell: sudo apt -qy update 2>/dev/null | grep packages | cut -d '.' -f 1
     
   - name: "installing Docker sdk for python"
     shell: sudo pip3 install docker
-    
-  - name: error lock
-    shell: sudo apt -qy update 2>/dev/null | grep packages | cut -d '.' -f 1
-    
+
  # - name: Install Docker Module for Python
   #  pip:
    #   name: docker
