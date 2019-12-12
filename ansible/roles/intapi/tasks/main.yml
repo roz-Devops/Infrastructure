@@ -8,7 +8,7 @@
     shell: sudo apt -qy update 2>/dev/null | grep packages | cut -d '.' -f 1
 
   - name: "installing Docker sdk for python"
-    shell: pip install docker
+    shell: sudo pip install docker
 
   - name: Start Container
     docker_container:
