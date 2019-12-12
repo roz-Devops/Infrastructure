@@ -19,17 +19,17 @@
   become: yes
   shell:  while sudo fuser /var/lib/dpkg/lock-frontend >/dev/null 2>&1; do sleep 5; done;
   
-- name: "lal"
-  become: yes
-  shell: dpkg --configure -a
+#- name: "lal"
+#  become: yes
+ # shell: dpkg --configure -a
   
 - name: installing pip3
   become: yes
-  shell: apt-get install -qy python3-pip
+  shell: apt-get install -qy python-pip
   
 - name: installing doceker sdk
   become: yes
-  shell: pip3 install docker
+  shell: pip install py-docker
          
 - name: Start Container
   docker_container:
