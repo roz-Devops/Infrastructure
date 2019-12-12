@@ -1,9 +1,12 @@
 ---
+- name: lsof
+  shell: lsof /var/lib/dpkg/lock-frontend > bbb&& cat bbb
+  
 - hosts: "Service_{{ service }}"
   become: true
   pre_tasks:   
   #   - raw: sudo apt -qy update 2>/dev/null | grep packages | cut -d '.' -f 1
-     - raw: lsof /var/lib/dpkg/lock-frontend > bbb
+     - raw: lsof /var/lib/dpkg/lock-frontend 
      - raw: sudo rm /var/lib/dpkg/lock-frontend
      - raw: sudo dpkg --configure -a
      - raw: apt-get install -qy python3-pip
