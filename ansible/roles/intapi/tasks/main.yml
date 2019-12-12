@@ -9,15 +9,19 @@
     state: absent
     path: "/var/lib/dpkg/lock-frontend"
       
-- name: Upgrade all packages to the latest version
-  apt:
-    name: "*"
-    state: latest
-    force_apt_get: yes  
+#- name: Upgrade all packages to the latest version
+ # apt:
+  #  name: "*"
+   # state: latest
+   # force_apt_get: yes  
 
 - name: Wait for sudo
   become: yes
-  shell:  while sudo fuser /var/lib/dpkg/lock >/dev/null 2>&1; do sleep 5; done;
+  shell:  while sudo fuser /var/lib/dpkg/lock-frontend >/dev/null 2>&1; do sleep 5; done;
+  
+- name: "lal"
+  become: yes
+  shell: dpkg --configure -a
   
 - name: installing pip3
   become: yes
