@@ -24,10 +24,9 @@
     
   #- name: error con2
    # shell: sudo apt install -qy python3-pip
-
-  #- name: Install required system packages
-   # apt: name={{ item }} state=latest
-   # loop: [ 'apt-transport-https', 'ca-certificates', 'curl', 'software-properties-common', 'python3-pip', 'virtualenv', 'python3-setuptools']    
+  - name: Install required system packages
+    apt: name={{ item }} 
+    loop: ['python3-pip', 'virtualenv', 'python3-setuptools']    
 
   #- name: Add Docker GPG apt Key
    # apt_key:
