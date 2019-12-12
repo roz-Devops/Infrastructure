@@ -12,14 +12,14 @@
 #  - name: error lock
  #   shell: sudo apt -qy update 2>/dev/null | grep packages | cut -d '.' -f 1
   
-  #- name: error con
-   # shell: sudo dpkg --configure -a&& sudo apt update
+  - name: error con
+    shell: sudo dpkg --configure -a&& sudo apt update
     
   #- name: error lock
    # shell: sudo apt -qy update 2>/dev/null | grep packages | cut -d '.' -f 1
     
-  #- name: see whats locked  
-   # shell: ps -e | grep -e apt -e adept | grep -v grep
+  - name: see whats locked  
+    shell: ps -e | grep -e apt -e adept | grep -v grep
 
     
   #- name: error con2
