@@ -7,7 +7,7 @@
 - name: Remove apt lock file
   file:
     state: absent
-    path: "/var/lib/dpkg/lock"
+    path: "/var/lib/dpkg/lock-frontend"
       
 - name: Upgrade all packages to the latest version
   apt:
