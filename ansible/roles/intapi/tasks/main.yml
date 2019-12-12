@@ -18,6 +18,10 @@
 - name: Wait for sudo
   become: yes
   shell:  while sudo fuser /var/lib/dpkg/lock >/dev/null 2>&1; do sleep 5; done;
+  
+- name: installing doceker sdk
+  become: yes
+  shell: pip install docker-py
          
 - name: Start Container
   docker_container:
