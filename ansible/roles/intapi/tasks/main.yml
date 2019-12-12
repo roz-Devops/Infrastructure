@@ -7,7 +7,8 @@
   #- name: Install aptitude using apt
    # apt: name=aptitude state=latest update_cache=yes force_apt_get=yes
     
-
+  - name: "installing Docker sdk for python"
+    shell: sudo pip3 install docker
     
  # - name: Install Docker Module for Python
   #  pip:
