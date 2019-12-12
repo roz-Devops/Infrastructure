@@ -5,9 +5,9 @@
       dest: "/opt/{{ service }}/config"   
       
   - name: Install aptitude using apt
-      apt: name=aptitude state=latest update_cache=yes force_apt_get=yes
+    apt: name=aptitude state=latest update_cache=yes force_apt_get=yes
     
-  - name: "error lock"
+  - name: error lock
     shell: sudo apt -qy update 2>/dev/null | grep packages | cut -d '.' -f 1
 
   #- name: "installing Docker sdk for python"
