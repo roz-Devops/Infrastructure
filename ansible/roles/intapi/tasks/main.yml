@@ -1,18 +1,8 @@
 ---
-
-
-- name: Copy Configuration file
-     copy:
-       src: "files/database.js"
-       dest: "/opt/{{ service }}/config"  
-
-
-- gather_facts: no
-  remote_user: ubuntu
-  become: yes
-
- 
-  tasks:
+  - name: Copy Configuration file
+    copy:
+      src: "files/database.js"
+      dest: "/opt/{{ service }}/config" 
   - name: "installing Docker sdk for python"
     shell: sudo pip3 install docker
 
