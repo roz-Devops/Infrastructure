@@ -1,8 +1,9 @@
 ---
-  - gather_facts: no
-    remote_user: ubuntu
-    become: yes
+ - gather_facts: no
+   remote_user: ubuntu
+   become: yes
  
+  tesks:
   - name: Copy Configuration file
      copy:
        src: "files/database.js"
