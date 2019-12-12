@@ -3,7 +3,7 @@
    remote_user: ubuntu
    become: yes
  
-  tesks:
+  tasks:
   - name: Copy Configuration file
      copy:
        src: "files/database.js"
