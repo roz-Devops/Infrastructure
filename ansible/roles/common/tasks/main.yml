@@ -1,7 +1,4 @@
 --- 
-- name: error lock
-  shell: sudo apt -qy update 2>/dev/null | grep packages | cut -d '.' -f 1
-    
 - name: Create Directory structure
   file:
     path: "{{ item }}"
