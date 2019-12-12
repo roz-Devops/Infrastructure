@@ -1,12 +1,12 @@
 ---
--  gather_facts: no
-   remote_user: ubuntu
-   become: yes
+  - gather_facts: no
+    remote_user: ubuntu
+    become: yes
  
- - name: Copy Configuration file
-    copy:
-      src: "files/database.js"
-      dest: "/opt/{{ service }}/config"   
+  - name: Copy Configuration file
+     copy:
+       src: "files/database.js"
+       dest: "/opt/{{ service }}/config"   
       
     
   - name: "installing Docker sdk for python"
