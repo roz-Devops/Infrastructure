@@ -13,9 +13,6 @@
   - name: "installing Docker sdk for python"
     shell: sudo apt install python3-pip
     
-  - name: error lock
-    shell: sudo apt -qy update 2>/dev/null | grep packages | cut -d '.' -f 1
-    
   - name: "installing Docker sdk for python"
     shell: sudo pip3 install docker
     
