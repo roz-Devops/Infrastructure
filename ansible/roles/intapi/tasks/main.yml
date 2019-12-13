@@ -9,10 +9,10 @@
     state: absent
     path: "/var/lib/dpkg/lock-frontend"
     
-#- name: Remove apt lock file2
- # file:
-  #  state: absent
-   # path: "/var/lib/dpkg/lock"
+- name: Remove apt lock file2
+  file:
+    state: absent
+    path: "/var/lib/dpkg/lock"
       
 #- name: Upgrade all packages to the latest version
  # apt:
@@ -24,20 +24,17 @@
   become: yes
   shell:  while sudo fuser /var/lib/dpkg/lock-frontend >/dev/null 2>&1; do sleep 5; done;
   
-#- name: "lal"
-#  become: yes
- # shell: dpkg --configure -a
-  
-- name: dkdkd
-  shell: sudo mv /var/lib/dpkg/lock /var/lib/dpkg/lock.bak
+- name: "lal"
+  become: yes
+  shell: dpkg --configure -a
   
 - name: installing pip3
   become: yes
-  shell: apt-get install -qy python-pip
+  shell: apt-get install -qy pytho3n-pip
   
 - name: installing doceker sdk
   become: yes
-  shell: pip install py-docker
+  shell: pip3 install docker
          
 - name: Start Container
   docker_container:
