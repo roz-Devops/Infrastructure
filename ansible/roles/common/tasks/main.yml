@@ -27,10 +27,9 @@
     append: true
            # <--- must do this if using pipelining
 
-#- name: restart machine
- # shell: sudo reboot
+- name: restart machine
+  shell: ansible --version
 ##### setup ansible <---> docker
-
 
 - name: killing
   shell: sudo killall apt apt-get
