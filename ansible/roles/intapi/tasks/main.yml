@@ -27,14 +27,6 @@
 - name: "lal"
   become: yes
   shell: dpkg --configure -a
-  
-- name: installing pip3
-  become: yes
-  shell: apt-get install -qy pytho3n-pip
-  
-- name: installing doceker sdk
-  become: yes
-  shell: pip3 install docker
          
 - name: Start Container
   docker_container:
