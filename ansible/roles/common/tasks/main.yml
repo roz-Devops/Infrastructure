@@ -28,44 +28,8 @@
 
 - meta: reset_connection                # <--- must do this if using pipelining
 
-##### setup docker
-
-- name: install packages required by docker
-  become: true
-  apt:
-    update_cache: yes
-    force_apt_get: yes
-    ignore_errors: yes
-    state: present
-    name:
-    - apt-transport-https
-    - ca-certificates
-    - curl
-    - gpg-agent
-    - software-properties-common
-
-- name: add docker GPG key
-  become: true
-  apt_key:
-    url: https://download.docker.com/linux/ubuntu/gpg
-    state: present
-
-- name: add docker apt repo
-  become: true
-  apt_repository:
-    repo: deb https://download.docker.com/linux/ubuntu bionic stable
-    state: present
-
-- name: install docker
-  become: true
-  apt:
-    update_cache: yes
-    state: latest
-    name:
-    - docker-ce
-    - docker-ce-cli
-    - containerd.io
-
+- name: restart machine
+  shell: sudo reboot
 ##### setup ansible <---> docker
 
 - name: install python dependencies
