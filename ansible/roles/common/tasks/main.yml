@@ -34,7 +34,8 @@
   become: true
   apt:
     update_cache: yes
-    state: latest
+    force_apt_get: yes
+    state: present
     name:
     - apt-transport-https
     - ca-certificates
