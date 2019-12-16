@@ -30,6 +30,11 @@
 #- name: restart machine
  # shell: sudo reboot
 ##### setup ansible <---> docker
+
+- name: Update all packages to the latest version
+  apt:
+    upgrade: dist
+    
 - name: Stop services
   service:
     name: "{{ item }}"
