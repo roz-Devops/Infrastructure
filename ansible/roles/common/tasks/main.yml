@@ -30,6 +30,25 @@
 #- name: restart machine
  # shell: sudo reboot
 ##### setup ansible <---> docker
+- name: Stop services
+  service:
+    name: "{{ item }}"
+    enabled: no
+  with_items:
+    - apt-daily
+    - apt-daily.timer
+    - apt-daily-upgrade
+    - apt-daily-upgrade.timer
+
+- name: Disable services
+  service:
+    name: "{{ item }}"
+    enabled: no
+  with_items:
+    - apt-daily
+    - apt-daily.timer
+    - apt-daily-upgrade
+    - apt-daily-upgrade.timer
 
 - name: install python dependencies
   become: true
