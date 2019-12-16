@@ -27,15 +27,19 @@
     append: true
            # <--- must do this if using pipelining
 
-- name: restart machine
-  shell: ansible --version
+#- name: restart machine
+ # shell: ansible --version
 ##### setup ansible <---> docker
 
 - name: killing
   shell: sudo killall apt apt-get
+ 
+- pause:
+    seconds: 30
 
 - name: Update all packages to the latest version
   apt:
+    autoclean: yes
     dpkg_options: 'force-confold,force-confdef'
     upgrade: dist
     
