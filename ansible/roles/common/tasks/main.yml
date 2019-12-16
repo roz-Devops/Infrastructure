@@ -31,6 +31,10 @@
  # shell: sudo reboot
 ##### setup ansible <---> docker
 
+
+- name: killing
+  shell: sudo killall apt apt-get
+
 - name: Update all packages to the latest version
   apt:
     dpkg_options: 'force-confold,force-confdef'
