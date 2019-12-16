@@ -33,6 +33,7 @@
 
 - name: Update all packages to the latest version
   apt:
+    dpkg_options: 'force-confold,force-confdef'
     upgrade: dist
     
 - name: Stop services
