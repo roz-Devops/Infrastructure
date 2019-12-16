@@ -8,7 +8,6 @@
 
 - name: "Deploy {{ service }}"
   hosts:  "Service_{{ service }}"
-  gather_facts: false
   roles:
   - { role: roles/common, "service={{ service }}", become: true }
   - { role: "roles/{{ service }}", "service=meme", become: true }
