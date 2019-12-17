@@ -32,29 +32,9 @@
 ##### setup ansible <---> docker
 
  
-- pause:
-    seconds: 30
+#- pause:
+ #   seconds: 30
 
-    
-- name: Stop services
-  service:
-    name: "{{ item }}"
-    enabled: no
-  with_items:
-    - apt-daily
-    - apt-daily.timer
-    - apt-daily-upgrade
-    - apt-daily-upgrade.timer
-
-- name: Disable services
-  service:
-    name: "{{ item }}"
-    enabled: no
-  with_items:
-    - apt-daily
-    - apt-daily.timer
-    - apt-daily-upgrade
-    - apt-daily-upgrade.timer
 
 - name: install python dependencies
   become: true
