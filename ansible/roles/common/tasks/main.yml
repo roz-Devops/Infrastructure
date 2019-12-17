@@ -31,17 +31,10 @@
  # shell: ansible --version
 ##### setup ansible <---> docker
 
-- name: killing
-  shell: sudo killall apt apt-get
  
 - pause:
     seconds: 30
 
-- name: Update all packages to the latest version
-  apt:
-    autoclean: yes
-    dpkg_options: 'force-confold,force-confdef'
-    upgrade: dist
     
 - name: Stop services
   service:
@@ -65,6 +58,7 @@
 
 - name: install python dependencies
   become: true
+  autoremove: yes
   shell: apt install -y python3-pip
 
 - name: install 'Docker SDK for Python'
