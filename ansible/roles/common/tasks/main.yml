@@ -13,18 +13,7 @@
     name: docker
     state: started
     enabled: yes
-- name: create docker group
-  become: true
-  group:
-    name: docker
-    state: present
-
-- name: add user to group 
-  become: true
-  user:
-    name: "ubuntu"
-    groups: docker
-    append: true
+    
            # <--- must do this if using pipelining
 
 #- name: restart machine
@@ -34,7 +23,15 @@
  
 #- pause:
  #   seconds: 30
-
+- name: Stop services
+  service:
+    name: "{{ item }}"
+    enabled: no
+  with_items:
+    - apt-daily
+    - apt-daily.timer
+    - apt-daily-upgrade
+    - apt-daily-upgrade.timer
 
 - name: install python dependencies
   become: true
