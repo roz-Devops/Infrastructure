@@ -16,6 +16,6 @@
   become: true
   roles:
   - { role: roles/common, "service:{{ service }}" }
-  -  role: roles/"{{ service }}" 
+  -  role: "roles/{{ service }}" 
      vars: 
          service_version: "{{ serviceVersion }}"  
