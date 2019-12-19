@@ -33,7 +33,7 @@
 #    var: docker_inspect.stdout
       
 - name: Get infos on container
-  docker_container:
+  docker_container_info:
     name: "{{ service }}"
   register: result
 
