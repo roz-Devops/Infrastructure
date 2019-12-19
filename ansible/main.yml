@@ -11,7 +11,7 @@
     delay: 30
   vars:
     ansible_connection: local
-    - setup:
+  - setup:
 
 - name: "Deploy {{ service }}"
   hosts:  "Service_{{ service }}"
