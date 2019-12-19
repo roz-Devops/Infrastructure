@@ -1,18 +1,5 @@
 ---
-- name: Update APT Cache
-  apt:
-   update_cache: yes
-   force_apt_get: yes
-      
-- name: Remove apt lock file
-  file:
-    state: absent
-    path: "/var/lib/dpkg/lock-frontend"
-    
-- name: Remove apt lock file2
-  file:
-    state: absent
-    path: "/var/lib/dpkg/lock"
+
       
 #- name: Upgrade all packages to the latest version
  # apt:
@@ -20,13 +7,6 @@
    # state: latest
    # force_apt_get: yes  
 
-- name: Wait for sudo
-  become: yes
-  shell:  while sudo fuser /var/lib/dpkg/lock-frontend >/dev/null 2>&1; do sleep 5; done;
-  
-- name: "lal"
-  become: yes
-  shell: dpkg --configure -a
          
 - name: Start Container
   docker_container:
