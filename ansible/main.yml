@@ -1,18 +1,15 @@
 ---
 - name: Pre Tasks
   hosts: "Service_{{ service }}"
-  gather_facts: false
   become: true
-  become_user: root
+  gather_facts: false
   pre_tasks:
-  - name: Wait 300 seconds for port 22 to become open and contain "OpenSSH"
-    wait_for:
-      port: 22
-      host: Service_{{ service }}
-      search_regex: OpenSSH
+    - setup:
+      register: setup_status
+      until: setup_status is success
       delay: 10
-    connection: local
-  - setup:
+      retries: 30
+- setup:
 
 - name: "Deploy {{ service }}"
   hosts:  "Service_{{ service }}"
