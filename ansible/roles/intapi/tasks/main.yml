@@ -36,6 +36,9 @@
   docker_container_info:
     name: "{{ service }}"
   register: result
+ 
+- debug:
+    msg: "{{ result }}"
 
 - name: Does container exist?
   debug:
