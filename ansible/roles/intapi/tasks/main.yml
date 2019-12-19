@@ -15,7 +15,7 @@
        pull: true
        recreate: yes
        ports:
-         - "3000:3000"
+         - "{{ api_port }}:{{ api_port }}"
        volumes:
          - "/opt/{{ service }}/config:/usr/src/app/config"
        restart_policy:
