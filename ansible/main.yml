@@ -19,3 +19,4 @@
   -  role: "roles/{{ service }}" 
      vars: 
          service_version: "{{ serviceVersion }}"  
+          dir: "roles/{{ service }}/vars" 
