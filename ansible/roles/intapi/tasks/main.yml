@@ -34,7 +34,7 @@
       
 - name: Get infos on container
   docker_container:
-    name: {{service}}
+    name: "{{ service }}"
   register: result
 
 - name: Does container exist?
