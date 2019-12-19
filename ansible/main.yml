@@ -18,4 +18,4 @@
   - { role: roles/common, "service:{{ service }}" }
   -  role: roles/"{{ service }}" 
      vars: 
-         service_version: {{ serviceVersion }}  
+         service_version: "{{ serviceVersion }}"  
