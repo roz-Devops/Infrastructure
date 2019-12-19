@@ -13,6 +13,9 @@
 
 - name: "Deploy {{ service }}"
   hosts:  "Service_{{ service }}"
+  become: true
   roles:
-  - { role: roles/common, "service:{{ service }}", become: true }
-  - { role: roles/"{{ service }}" , vars: { "service_version:{{ serviceVersion }}" } , become: true }
+  - { role: roles/common, "service:{{ service }}" }
+  -  role: roles/"{{ service }}" 
+     vars: 
+         service_version: {{ serviceVersion }}  
