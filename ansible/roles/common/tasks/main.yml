@@ -14,29 +14,3 @@
     state: started
     enabled: yes
     
-           # <--- must do this if using pipelining
-
-#- name: restart machine
- # shell: ansible --version
-##### setup ansible <---> docker
-
- 
-#- pause:
- #   seconds: 30
-- name: Stop services
-  service:
-    name: "{{ item }}"
-    enabled: no
-  with_items:
-    - apt-daily
-    - apt-daily.timer
-    - apt-daily-upgrade
-    - apt-daily-upgrade.timer
-
-- name: install python dependencies
-  become: true
-  shell: apt install -y python3-pip
-
-- name: install 'Docker SDK for Python'
-  pip:
-    name: docker
