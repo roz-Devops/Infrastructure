@@ -24,21 +24,11 @@
          no
        state:
          started
-         
-#- name: Save Docker Log Into Register
-#  shell: docker inspect --format={{ '{{.State.Running}}' }} {{ service }}
-#  register: docker_inspect
-  
-#- debug:
-#    var: docker_inspect.stdout
       
 - name: Get infos on container
   docker_container_info:
     name: "{{ service }}"
   register: result
- 
-- debug:
-    msg: "{{ result }}"
 
 - name: Does container exist?
   debug:
@@ -46,5 +36,5 @@
 
 - name: Print the status of the container
   debug:
-    msg: "The {{ service }} container status is {{ result.container['State']['Status'] }}"
+    msg: "The {{ service }} {{ result.container['State']['Pid'] }} container status is {{ result.container['State']['Status'] }}"
   when: result.exists
