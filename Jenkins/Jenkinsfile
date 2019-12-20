@@ -37,8 +37,7 @@ pipeline {
                         infrastructureVersion = releaseFile["release"]["infrastructure_version"]
                         automationVersion = releaseFile["release"]["automation_version"]
                         envName = releaseFile["release"]["environment"]
-                        //servicesList = releaseFile["release"]["services"].keySet()
-                        service = "intapi"
+                        servicesList = releaseFile["release"]["services"].keySet()
                         println("Those Services will be deployed ${service}")
                         print("The environment is ${envName}")
                         environmentFile = jsonParse(readFile("environments.json"))
@@ -70,7 +69,8 @@ pipeline {
         stage ('Vaildate Instances amount') {
             steps {
                 script {
-                    dir ('infrastructure/terraform') {
+                  dir ('infrastructure/terraform') {
+                     for ( service in servicesList ) {
                         int aws_currentCount = sh script: "aws ec2 describe-instances --query 'Reservations[*].Instances[*].[InstanceId]' --region ${aws_region} --filters 'Name=instance-state-name,Values=running' 'Name=tag-key,Values=Service' 'Name=tag-value,Values=${service}' --output text | wc -l" , returnStdout: true
    
                         int required_ins_count = releaseFile["release"]["services"]["${service}"]['instance_count']
@@ -98,17 +98,16 @@ pipeline {
                                 println("[INFO] Instnaces amount are aligned")
                         }
                         
-                    
                     }
-                }
-            }
+                 }
+              }
+           }
         }     
         stage ('Deploy Services') {
             steps {
                 script {
                     dir('infrastructure/ansible') {
-                        service = "intapi"
-
+                      for ( service in servicesList ) {
                             configVersion = releaseFile["release"]["services"]["${service}"]["configuration"]
                             dir('Configuration') {
                                checkout([$class: 'GitSCM', branches: [[name: "*/${configVersion}"]], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'git_rd_cred', url: 'https://github.com/roz-Devops/Configuration.git']]])
@@ -124,7 +123,7 @@ pipeline {
                     }
                 }
             }
-         
+        }
         stage ('Run Automation') {
             steps {
                 script {
