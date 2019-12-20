@@ -119,11 +119,11 @@ pipeline {
                                checkout([$class: 'GitSCM', branches: [[name: "*/Dev"]], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'git_rd_cred', url: 'https://github.com/roz-Devops/Configuration.git']]])
   
                             }
-                           println "after config"
+                            println "after config"
                             sh "mkdir -p ./roles/${service}/files/"
-                            sh " echo 'con pwd ... "
+                             print("pwd conf check")
                             sh "pwd"
-                            sh "pwd"
+                            sh "ls"
                             sh "cp ./Configuration/${service}/*.* ./roles/${service}/files/"
                             sh "sed -i 's/REGION/${aws_region}/g' inventory.aws_ec2.yml"
                             sh "ansible-playbook -i inventory.aws_ec2.yml main.yml --extra-vars 'service=${service}' -e 'service_version=${serviceVersion}'"
