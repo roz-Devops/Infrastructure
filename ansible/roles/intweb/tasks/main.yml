@@ -7,7 +7,7 @@
 - name: Start Container
   docker_container:
     name: "{{ service }}"
-    image: "{{ service }}:{{ service_version }}"
+    image: "rozdockerforever/dev:{{ service }}_{{ service_version }}"
     recreate: yes
     ports:
       - "{{ web_port }}:{{ web_port }}"
@@ -20,3 +20,17 @@
       no
     state:
       started
+      
+- name: Get infos on container
+  docker_container_info:
+    name: "{{ service }}"
+  register: result
+
+- name: Does container exist?
+  debug:
+    msg: "The {{service}} container {{ 'exists' if result.exists else 'does not exist' }}"
+
+- name: Print the status of the container
+  debug:
+    msg: "The {{ service }} {{ result.container['State']['Pid'] }} container status is {{ result.container['State']['Status'] }}"
+  when: result.exists
