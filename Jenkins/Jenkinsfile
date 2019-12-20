@@ -121,6 +121,9 @@ pipeline {
                             }
                            println "after config"
                             sh "mkdir -p ./roles/${service}/files/"
+                            sh " echo 'con pwd ... "
+                            sh "pwd"
+                            sh "pwd"
                             sh "cp ./Configuration/${service}/*.* ./roles/${service}/files/"
                             sh "sed -i 's/REGION/${aws_region}/g' inventory.aws_ec2.yml"
                             sh "ansible-playbook -i inventory.aws_ec2.yml main.yml --extra-vars 'service=${service}' -e 'service_version=${serviceVersion}'"
