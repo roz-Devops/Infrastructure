@@ -15,7 +15,12 @@
   hosts:  "Service_{{ service }}"
   become: true
   roles:
-  - { role: roles/common, "service:{{ service }}" }
+  -  role: "roles/common"
+     vars: 
+         service: "{{ service }}"
+         service_version: "{{ serviceVersion }}"
+         dir: "roles/{{ service }}/vars" 
+         
   -  role: "roles/{{ service }}" 
      vars: 
          service_version: "{{ serviceVersion }}"  
