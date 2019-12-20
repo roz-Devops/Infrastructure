@@ -85,7 +85,8 @@ pipeline {
                                sh "terraform init"  
                                echo (" instances_to_add : ${instances_to_add}")
                                sh "terraform apply -auto-approve -var='envName=${envName}' -var='aws_vpc_id=${aws_vpc}' -var='securitygroup=${security_group}' -var='aws_region=${aws_region}' -var='count_var=${instances_to_add}' -var='serviceName=${service}' -var='serviceVersion=${serviceVersion}'"
-                              
+                               sh "rm 	terraform.tfstate -f"
+                               sh "rm 	terraform.tfstate.backup -f"
                          }   
                          else if ( aws_currentCount > required_ins_count ) {
                               // remove instances
