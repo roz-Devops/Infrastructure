@@ -113,7 +113,7 @@ pipeline {
                       for ( service in servicesList ) {
                             configVersion = releaseFile["release"]["services"]["${service}"]["configuration"]
                             dir('Configuration') {
-                               checkout([$class: 'GitSCM', branches: [[name: "*/dev"]], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'git_rd_cred', url: 'https://github.com/roz-Devops/Configuration.git']]])
+                               checkout([$class: 'GitSCM', branches: [[name: "*/Dev"]], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'git_rd_cred', url: 'https://github.com/roz-Devops/Configuration.git']]])
   
                             }
                            println "after config"
