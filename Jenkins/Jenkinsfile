@@ -81,10 +81,11 @@ pipeline {
                             echo (" required_ins_count : ${required_ins_count}")
                         int instances_to_add = required_ins_count - aws_currentCount
                          if ( aws_currentCount < required_ins_count ) {
-                             
+                              dir("./terraform_${service}") {
                                echo (" instances_to_add : ${instances_to_add}")
                                sh "terraform apply -auto-approve -var='envName=${envName}' -var='aws_vpc_id=${aws_vpc}' -var='securitygroup=${security_group}' -var='aws_region=${aws_region}' -var='count_var=${instances_to_add}' -var='serviceName=${service}' -var='serviceVersion=${serviceVersion}'"
-                        }
+                              }  
+                         }   
                          else if ( aws_currentCount > required_ins_count ) {
                               // remove instances
                               def running_instances_list = sh script: "aws ec2 describe-instances --query 'Reservations[*].Instances[*].[InstanceId]' --region ${aws_region} --filters 'Name=instance-state-name,Values=running' 'Name=tag-key,Values=Service' 'Name=tag-value,Values=${service}' --output text", returnStdout: true
