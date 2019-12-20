@@ -124,7 +124,7 @@ pipeline {
                              print("pwd conf check")
                             sh "pwd"
                             sh "ls"
-                            sh "cp -a Configuration/${service}/. ./roles/${service}/files/"
+                            sh "cp -a ./Configuration/${service}/. ./roles/${service}/files/"
                             sh "sed -i 's/REGION/${aws_region}/g' inventory.aws_ec2.yml"
                             sh "ansible-playbook -i inventory.aws_ec2.yml main.yml --extra-vars 'service=${service}' -e 'service_version=${serviceVersion}'"
                            
